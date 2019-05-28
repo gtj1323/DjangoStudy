@@ -1,6 +1,6 @@
 [TOC]
 
-# 1. 180527 파일 읽고 수정 명령.
+# 1. 190527 파일 읽고 수정 명령.
 
 
 
@@ -54,15 +54,15 @@ os.path.splitext(filename) 확장자와 파일명을 구분
 '''
 ```
 
-os.listdir('.')
+**os.listdir('.')**
 
 > 해당 디렉토리의 파일 목록을 리턴함.
 
-os.chdir(r'dir_path')
+**os.chdir(r'dir_path')**
 
 > 해당 디렉토리 내의 파일 목록을 읽어 List로 리턴.
 
-os.path.splitext(filename)
+**os.path.splitext(filename)**
 
 > 확장자와 파일명을 구분하여 List로 리턴
 >
@@ -91,11 +91,11 @@ os.path.splitext(filename) 확장자와 파일명을 구분
 '''
 ```
 
-os.rename('변환 전 파일 명', '변환 후 파일 명')
+**os.rename('변환 전 파일 명', '변환 후 파일 명')**
 
 > 파일명을 바꾸어 줌.
 
-[txt].replace('변환 전', '변환 후')
+**[txt].replace('변환 전', '변환 후')**
 
 > 텍스트의 내용을 변환 전 에서 변환 후로 수정하여 리턴.
 
@@ -116,15 +116,17 @@ with open('mulcam.txt', 'a') as f:  # 'a'를 하면 뒤에 따라 씀.
         f.write(f'This is line {i + 1}.\n')
 ```
 
-open('파일명.확장자', '매개변수 char')
+**open('파일명.확장자', '매개변수 char')**
 
 > 파일을 읽거나 씀. 매개변수 char가 'w', 'r'에 따라 읽기, 쓰기가 가능.
 >
 > 원래는 반드시 닫야 줘야하지만 with를 씀으로써 극복 가능.
 
-with
+**with**
 
-> 자동으로 닫아주는 기능이 있음.
+> 컨텍스트 매니저를 불러서 의도치 않은 상황에서도 자동으로 제한하고 해제하는 역할을 해줌.
+>
+> close()를 따로 사용할 필요가 없어짐.
 
 
 
@@ -162,7 +164,7 @@ with open('number.txt', 'w') as f:
         f.write(line)
 ```
 
-[list].reverse()
+**[list].reverse()**
 
 > 작성된 리스트의 순서를 뒤집음.
 
@@ -196,27 +198,27 @@ with open('lunch3.csv', 'w', encoding='utf-8') as f:
         csv_writer.writerow(item)
 ```
 
-[dic].items()
+**[dic].items()**
 
 > 키와 아이템을 튜플 형식으로 리턴
 
-','.join(item)
+**','.join(item)**
 
 > 아이템에 있는 변수를 ','를 사이에 넣어서 리턴함.
 
-f.write('content')
+**f.write('content')**
 
 > 파일에 content 를 작성함.
 
-csv.writer(file)
+**csv.writer(file)**
 
 > 작성가능하도록 만들어 줌.
 
-[csv.writer(file)].writerow(item)
+**[csv.writer(file)].writerow(item)**
 
 > item에 있는 내용을 ','(csv의 구분자)로 나누어 작성함. 끝에는 \n(계행 문자)를 넣어 줌.
 
-open('파일 명.확장자', '매개변수 [char]', encoding='utf-8') :
+**open('파일 명.확장자', '매개변수 [char]', encoding='utf-8') :**
 
 > 원래라면 따로 close를 해주어야 하지만, with를 사용함으로써 자동으로 close됨.
 >
@@ -243,19 +245,19 @@ with open('lunch.csv', 'r', encoding='utf-8') as f:
         print(item)
 ```
 
-f.readlines()
+**f.readlines()**
 
 >파일을 한 줄씩 읽어 리스트로 변환하여 리턴함.
 
-[text]].strip() [text]].rstrip() [text]].lstrip() 
+**[text]].strip() [text]].rstrip() [text]].lstrip() **
 
 > 내용에 들어있는 계행문자(\n)를 제거함. r을 하면 오른쪽, l을 하면 왼쪽을 제거함.
 
-[text].split(',')
+**[text].split(',')**
 
 > 내용에 들어 있는 문자를 ','를 이용하여 구분 리스트로 반환함.
 
-csv.reader(f)
+**csv.reader(f)**
 
 > csv파일을 읽어 사용하는 상태가 됨.
 
@@ -285,21 +287,21 @@ kospi = soup.select_one('#KOSPI_now')
 print(kospi.text)
 ```
 
-[text, html].text
+**[text, html].text**
 
 > 텍스트만 리턴, html태크 등을 제거하고 리턴함.
 
-requests.get('페이지 주소')
+**requests.get('페이지 주소')**
 
 > 크롤링할 페이지의 html문서를받아옴.
 
-BeautifulSoup([requests,html], 'html.parser')
+**BeautifulSoup([requests,html], 'html.parser')**
 
 >html을 다룰 수 있도록 하여 'bs4.BeautifulSoup 객체를 리턴
 >
 >'html.parser'는 정해져있음.
 
-soup.select_one('html 태그')
+**soup.select_one('html 태그')**
 
 > html 문서의 태그를 따라가고, 남아있는 태그와 텍스트를 리턴함.
 
@@ -321,7 +323,7 @@ for item in top10:
     print(item.text)
 ```
 
-soup.select('html 태그')
+**soup.select('html 태그')**
 
 > 해당 태그가 가능한 것들을 list로 리턴함.
 
@@ -474,7 +476,7 @@ print('이메일 전송 완료 !!')
 
 ```
 
-getpass()
+**getpass()**
 
 > 패스워드를 직접 입력받아서 쓰기 위해 사용.
 
@@ -589,54 +591,7 @@ print('이메일 전송 완료 !!')
 </html>
 ```
 
-결과
 
--------------
-
-		<h1>
-			<font face='궁서체'>2019 타임테이블</font>
-		</h1>
-		<table border="1">
-			<tr>
-				<td colspan="2">
-					<h2>
-						<div id='center' font face='고딕체'>TIME INDOOR</div>
-					</h2>
-				</td>
-				<td colspan="2">
-					<h2>
-						<div id='center' font face='고딕체'>OUTDOOR</div>
-					</h2>
-				</td>
-			</tr>
-			<tr>
-				<th></th>
-				<th>소극장</th>
-				<th>잔디마당</th>
-				<th>대공연장</th>
-			</tr>
-			<tr>
-				<td>10:00</td>
-				<td rowspan="2">키썸</td>
-				<td></td>
-				<td>10CM</td>
-			</tr>
-			<tr>
-				<td>13:00</td>
-				<td rowspan="2">볼빨간 사춘기</td>
-				<td rowspan="2">장범준</td>
-			</tr>
-			<tr>
-				<td>15:00</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>17:00</td>
-				<td>헤이즈</td>
-				<td></td>
-				<td>ColdPlay</td>
-			</tr>
-		</table>
 
 
 - from을 이용한 간단한 작성
@@ -724,7 +679,7 @@ print('이메일 전송 완료 !!')
 ***
 
 
-## 참고자료
+# ※ 참고자료 190527
 >  - 참고자료 - 2019년 웹개발자 로드맵 : <https://github.com/kamranahmedse/developer-roadmap>
 > - 참고자료 - 2019년 웹개발자 로드맵 : <https://github.com/devJang/developer-roadmap>
 > - 참고자료 - 자바스크립트 공부 : <https://eloquentjavascript.net/>
@@ -735,7 +690,3 @@ print('이메일 전송 완료 !!')
 > - ChromeExtension  - Web Developer
 > - [emmet cheat sheet](https://docs.emmet.io/cheat-sheet/) -  html 작성에 유용한 툴.
 > - 
-> - 
-> - 
-> - 
-
