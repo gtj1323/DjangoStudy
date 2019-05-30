@@ -4,7 +4,7 @@
 
 
 
-## 1-1. 파이썬으로 파일 다루기
+## 1.1. 파이썬으로 파일 다루기
 
 - dummy_ex\dummy.py : 성, 이름을 랜덤으로 석어 500개의 .txt파일을 생성
 
@@ -27,7 +27,7 @@ os.rename('현재파일 명', '바꿀 파일 명')
 '''
 ```
 
-f'{변수명} and {변수명}...'
+**f'{변수명} and {변수명}...'**
 
 > [string].format 의 다른 형태로 보면 됨. python 3.7부터 적용되는 함수.
 
@@ -101,7 +101,7 @@ os.path.splitext(filename) 확장자와 파일명을 구분
 
 
 
-## 1-2. 파이썬으로 txt파일 다루기
+## 1.2. 파이썬으로 txt파일 다루기
 
 - text_ex\write_text.py : txt파일 몇줄 반복해서 작성.
 
@@ -170,7 +170,7 @@ with open('number.txt', 'w') as f:
 
 
 
-## 1-3. 파이썬으로 CSV파일 다루기
+## 1.3. 파이썬으로 CSV파일 다루기
 
 - csv_ex\write_csv.py : lunch에 있는 내용을 CSV파일로 만들어서 저장.
 
@@ -263,7 +263,7 @@ with open('lunch.csv', 'r', encoding='utf-8') as f:
 
 
 
-## 1-4. 스크래핑 기초
+## 1.4. 스크래핑 기초
 
 - scraping_ex\remind.py : 'https://finance.naver.com/sise/' 페이지에서 코스피지수를 출력함.
 
@@ -446,7 +446,7 @@ with open('MelonCart.txt', 'w', encoding='utf-8') as f:
 
 
 
-## 1-5. 파이썬으로 메일 보내기.
+## 1.5. 파이썬으로 메일 보내기.
 
 - email_ex\naver_text_email.py
 

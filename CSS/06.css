@@ -1,0 +1,34 @@
+body{
+    height: 10000px;
+}
+.square {
+    /* position: relative; */
+    position: static;
+    width: 100px;
+    height: 100px;
+    background-color: darkgray;
+}
+
+.relative-box{
+    /* 자신의 원래 위치를 기준으로 움직임. */
+    position: relative;
+    background-color:navy;
+    top: 10px;
+    left: 10px;
+}
+
+.absolute-box{
+    position: absolute;
+    /* 부모 혹은 상위 중 static이 아닌 부모를 기준으로 이동함.
+    부모가 static인 경우 더 상위인 부모에서 static이 아닌 부모를 자동으로 찾음. */
+    background-color: red;
+    top: 30px;
+    left: 30px;
+}
+
+.fixed{
+    position: fixed;
+    background-color: chocolate;
+    bottom: 10px;
+    left: 10px;
+}

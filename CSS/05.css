@@ -1,0 +1,8 @@
+.none{
+    display: none;
+    /* 구조가 깨질 수 있음. */
+}
+
+.hidden{
+    visibility:hidden;
+}

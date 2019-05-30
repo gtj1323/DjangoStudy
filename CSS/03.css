@@ -1,0 +1,56 @@
+p, h3{
+    color:gray;
+}
+
+.black_bg, .white{
+    color: white;
+    background-color: black;
+}
+
+div{
+    width:100px;
+    height:100px;
+    border: 1px solid black; /*순서 상관 없음.*/
+}
+
+.red{
+    background-color: red;
+}
+
+.blue{
+    background-color: blue;
+}
+
+
+/*인접 선택자*/
+.red + .blue + div{/*red클래스 옆의 blue클래스에 붙어 있는 div태그에 적용*/
+    background-color: purple;
+}
+
+/* 형제 선택자 */
+h1 + p{ /* h1 옆에 있는 p 태그 */
+    color: crimson;
+}
+
+/* 자식 선택자 */
+ol > li{
+    color:darkgreen;
+}
+
+ol#chocolate > li{ /*ol의 id가 chocolate인 경우 자식의 색*/
+    color:chocolate;
+}
+
+ul li{ /* ul의 자손 중 li에 적용*/
+    color: lime;
+}
+
+/* nth */
+#mulcam > p:nth-child(2){/* 모든 자식 중 2번 째 */
+    color: red;
+}
+
+#mulcam > p:nth-of-type(2){/* p태그를 가진 자식 중 2번 째 */
+    color: blue;
+}
+

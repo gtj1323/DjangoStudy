@@ -4,7 +4,7 @@
 
 
 
-## 2-0. VS Code로 html 다루기 tip
+## 2.0. VS Code로 html 다루기 tip
 
 - alt+ctrl : html 다중 선택.
 - alt+shift : html 라인 복사.
@@ -25,7 +25,7 @@
 
 
 
-## 2-1. CSS 사용하기
+## 2.1. CSS 사용하기
 
 - 00_css.html
 
@@ -64,7 +64,7 @@ h3{
 
 
 
-## 2-2. 다양한 글씨 사이즈 적용.
+## 2.2. 다양한 글씨 사이즈 적용.
 
 - 01_unit.html
 
@@ -125,7 +125,7 @@ ul, ul li{/*ul과 ul태그 안의 li(리스트)에 적용. ul li는 부모의 1.
 
 
 
-## 2-3. class, id에 적용하기.
+## 2.3. class, id에 적용하기.
 
 - 02_selector_1.html
 
@@ -302,7 +302,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 
 
 
-## 2-4. 박스모델 다루기
+## 2.4. 박스모델 다루기
 
 - 04_boxmodel.html
 
@@ -400,7 +400,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 
 
 
-## 2-5. display 다루기 /none, hidden
+## 2.5. display 다루기 /none, hidden
 
 - 05_display.html
 
@@ -456,7 +456,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 
 
 
-## 2-6. position 다루기
+## 2.6. position 다루기
 
 - 06_position.html
 
@@ -527,7 +527,7 @@ body{
 
 
 
-### 2-6-1. 예제 position,박스 옮기기 1
+### 2.6.1. 예제 position,박스 옮기기 1
 
 - example2.html
 
@@ -627,7 +627,7 @@ body{
 
 
 
-### 2-6-2. 예제 position,박스 옮기기 2
+### 2.6.2. 예제 position,박스 옮기기 2
 
 - example2.html
 
@@ -735,7 +735,7 @@ body{
 
 
 
-## 3-0. 부트스트랩
+## 3.0. 부트스트랩
 
 materialize라는 비슷한 프로그램이 있었으나.(구글에서 만듦.) 거의 사장.
 
@@ -747,7 +747,7 @@ CDN : 캐싱됨. 부트스트랩서버를 이용하기 때문에 운영하는 �
 
 
 
-## 3-1. 부트스트랩 기초
+## 3.1. 부트스트랩 기초
 
 - 00_bootstrap.html
 
@@ -812,7 +812,7 @@ CDN : 캐싱됨. 부트스트랩서버를 이용하기 때문에 운영하는 �
 
 
 
-## 3-2. 부트스트랩 grid 다루기
+## 3.2. 부트스트랩 grid 다루기
 
 - 01_greid.html
 
@@ -924,7 +924,7 @@ CDN : 캐싱됨. 부트스트랩서버를 이용하기 때문에 운영하는 �
 
 
 
-## 3-3. 다양한 bootstrap 요소 사용하기.
+## 3.3. 다양한 bootstrap 요소 사용하기.
 
 - 02_components.html
 

@@ -1,0 +1,23 @@
+html{
+    font-size: 20px;
+}
+
+ol, ol li{ /*ol과 ol안의 li태그에 적용.*/
+    font-size: 1.2rem; /*부모의 1.2배*/
+}
+
+ul, ul li{/*ul과 ul태그 안의 li(리스트)에 적용. ul li는 1.44배가 적용 됨.*/
+    font-size: 1.2em;
+}
+
+.vh{ /*vh, vw, vmin 은 반응형 class 선택은 [.'class 명']*/
+    font-size: 5vh;
+}
+
+.vw{
+    font-size: 5vw;
+}
+
+.vmin{
+    font-size: 10vmin;
+}

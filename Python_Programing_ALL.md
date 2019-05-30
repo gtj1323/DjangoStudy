@@ -4,7 +4,7 @@
 
 
 
-## 1-1. 파이썬으로 파일 다루기
+## 1.1. 파이썬으로 파일 다루기
 
 - dummy_ex\dummy.py : 성, 이름을 랜덤으로 석어 500개의 .txt파일을 생성
 
@@ -101,7 +101,7 @@ os.path.splitext(filename) 확장자와 파일명을 구분
 
 
 
-## 1-2. 파이썬으로 txt파일 다루기
+## 1.2. 파이썬으로 txt파일 다루기
 
 - text_ex\write_text.py : txt파일 몇줄 반복해서 작성.
 
@@ -170,7 +170,7 @@ with open('number.txt', 'w') as f:
 
 
 
-## 1-3. 파이썬으로 CSV파일 다루기
+## 1.3. 파이썬으로 CSV파일 다루기
 
 - csv_ex\write_csv.py : lunch에 있는 내용을 CSV파일로 만들어서 저장.
 
@@ -263,7 +263,7 @@ with open('lunch.csv', 'r', encoding='utf-8') as f:
 
 
 
-## 1-4. 스크래핑 기초
+## 1.4. 스크래핑 기초
 
 - scraping_ex\remind.py : 'https://finance.naver.com/sise/' 페이지에서 코스피지수를 출력함.
 
@@ -285,6 +285,7 @@ soup = BeautifulSoup(req, 'html.parser')
 # 3. 바꾼 정보 중 원하는 것만 뽑아서 ,출력한다.
 kospi = soup.select_one('#KOSPI_now')
 print(kospi.text)
+
 ```
 
 **[text, html].text**
@@ -321,6 +322,7 @@ top10 = soup.select('.PM_CL_realtimeKeyword_rolling .ah_item .ah_k')
 
 for item in top10:
     print(item.text)
+
 ```
 
 **soup.select('html 태그')**
@@ -343,6 +345,7 @@ tags = soup.select('#tableAsset > tbody > tr > td:nth-child(1) > p > a > strong'
 
 for tag in tags:
     print(tag.text)
+
 ```
 
 
@@ -369,6 +372,7 @@ with open('bitbit.txt', 'w', encoding='utf-8') as f :
         #     name.text.replace(' NEW', '')
         #     print(name.text, 'new!')
         f.write(f'{n[0]} / {price.text}\n')
+
 ```
 
 
@@ -393,6 +397,7 @@ for i, item in enumerate(coin_name_tags):
 
     with open(f'coin.txt', 'a', encoding='utf-8') as f:
         f.write(f'{line}')
+
 ```
 
 
@@ -413,6 +418,7 @@ with open('bitbit.txt', 'w', encoding='utf-8') as f:
         name = tag.select_one('td:nth-of-type(1) a strong').text.replace(' NEW', '').strip()
         price = tag.select_one('td:nth-of-type(2) strong').text
         f.write(f'{name} / {price}\n')
+
 ```
 
 
@@ -439,13 +445,14 @@ with open('MelonCart.txt', 'w', encoding='utf-8') as f:
         title = tag.select_one('td:nth-child(6) .ellipsis.rank02 a').text
         print(f'{rank}위 / {artist} / {title}')
         f.write(f'{rank}위 / {artist} / {title}\n')
+
 ```
 
 > 멜론의 경우 header를 함께 보내야만 서버에서 응답이 오기 때문에 같이 보내 주기 위해서 dic형태로 header를 작성하여 함께 보내 주어야함.
 
 
 
-## 1-5. 파이썬으로 메일 보내기.
+## 1.5. 파이썬으로 메일 보내기.
 
 - email_ex\naver_text_email.py
 
@@ -472,6 +479,7 @@ s.login('gtj1323', password)
 s.send_message(msg)
 
 print('이메일 전송 완료 !!')
+
 
 ```
 
@@ -519,6 +527,7 @@ s.login('gtj1323', password)
 s.send_message(msg)
 
 print('이메일 전송 완료 !!')
+
 
 ```
 
@@ -588,6 +597,7 @@ print('이메일 전송 완료 !!')
 </body>
 
 </html>
+
 ```
 
 
@@ -664,11 +674,8 @@ print('이메일 전송 완료 !!')
 </body>
 
 </html>
+
 ```
-
-
-
-
 
 
 
@@ -689,24 +696,11 @@ print('이메일 전송 완료 !!')
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-[TOC]
-
 # 2. 190528 CSS 다루기.
 
 
 
-## 2-0. VS Code로 html 다루기 tip
+## 2.0. VS Code로 html 다루기 tip
 
 - alt+ctrl : html 다중 선택.
 - alt+shift : html 라인 복사.
@@ -727,7 +721,7 @@ print('이메일 전송 완료 !!')
 
 
 
-## 2-1. CSS 사용하기
+## 2.1. CSS 사용하기
 
 - 00_css.html
 
@@ -762,11 +756,11 @@ h3{
 **> 스타일 적용 우선 순위**
 
 > !important > inline > embedding > file link > browser default
->   단, 동일한 head에 외부스타일을 나중에 정의할 경우, 나중에 정의한 외부스타일이 먼저 적용. 마지막에 덮어씌워지기 때문.
+> 단, 동일한 head에 외부스타일을 나중에 정의할 경우, 나중에 정의한 외부스타일이 먼저 적용. 마지막에 덮어씌워지기 때문.
 
 
 
-## 2-2. 다양한 글씨 사이즈 적용.
+## 2.2. 다양한 글씨 사이즈 적용.
 
 - 01_unit.html
 
@@ -827,7 +821,7 @@ ul, ul li{/*ul과 ul태그 안의 li(리스트)에 적용. ul li는 부모의 1.
 
 
 
-## 2-3. class, id에 적용하기.
+## 2.3. class, id에 적용하기.
 
 - 02_selector_1.html
 
@@ -1000,11 +994,12 @@ ul li{ /* ul의 자손 중 li에 적용*/
 #mulcam > p:nth-of-type(2){/* p태그를 가진 자식 중 2번 째 */
     color: blue;
 }
+
 ```
 
 
 
-## 2-4. 박스모델 다루기
+## 2.4. 박스모델 다루기
 
 - 04_boxmodel.html
 
@@ -1054,6 +1049,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 </body>
 
 </html>
+
 ```
 
 - 04.css
@@ -1094,6 +1090,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
     /* 2개 tb  rl */
     /* 1개 trbl */
 }
+
 ```
 
 **박스 모델**
@@ -1102,7 +1099,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 
 
 
-## 2-5. display 다루기 /none, hidden
+## 2.5. display 다루기 /none, hidden
 
 - 05_display.html
 
@@ -1134,6 +1131,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 </body>
 
 </html>
+
 ```
 
 - 05.css
@@ -1146,6 +1144,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 .hidden{
     visibility:hidden;
 }
+
 ```
 
 **none**
@@ -1158,7 +1157,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 
 
 
-## 2-6. position 다루기
+## 2.6. position 다루기
 
 - 06_position.html
 
@@ -1189,6 +1188,7 @@ ul li{ /* ul의 자손 중 li에 적용*/
 </body>
 
 </html>
+
 ```
 
 - 06.css
@@ -1225,11 +1225,12 @@ body{
     bottom: 10px;
     left: 10px;
 }
+
 ```
 
 
 
-### 2-6-1. 예제 position,박스 옮기기 1
+### 2.6.1. 예제 position,박스 옮기기 1
 
 - example2.html
 
@@ -1256,6 +1257,7 @@ body{
 </body>
 
 </html>
+
 ```
 
 - style1.css
@@ -1315,6 +1317,7 @@ body{
     left: 0px;
     /* 큰 사각형 내부의 좌측 상단 모서리로 옮기기*/
 }
+
 ```
 
 **relative**
@@ -1329,7 +1332,7 @@ body{
 
 
 
-### 2-6-2. 예제 position,박스 옮기기 2
+### 2.6.2. 예제 position,박스 옮기기 2
 
 - example2.html
 
@@ -1360,6 +1363,7 @@ body{
 </body>
 
 </html>
+
 ```
 
 - style2.css
@@ -1429,6 +1433,7 @@ body{
     left: 100px;
     /* 파란색의 오른쪽 위, pink의 자식 */
 }
+
 ```
 
 
@@ -1437,7 +1442,7 @@ body{
 
 
 
-## 3-0. 부트스트랩
+## 3.0. 부트스트랩
 
 materialize라는 비슷한 프로그램이 있었으나.(구글에서 만듦.) 거의 사장.
 
@@ -1449,7 +1454,7 @@ CDN : 캐싱됨. 부트스트랩서버를 이용하기 때문에 운영하는 �
 
 
 
-## 3-1. 부트스트랩 기초
+## 3.1. 부트스트랩 기초
 
 - 00_bootstrap.html
 
@@ -1510,11 +1515,12 @@ CDN : 캐싱됨. 부트스트랩서버를 이용하기 때문에 운영하는 �
 </body>
 
 </html>
+
 ```
 
 
 
-## 3-2. 부트스트랩 grid 다루기
+## 3.2. 부트스트랩 grid 다루기
 
 - 01_greid.html
 
@@ -1622,11 +1628,12 @@ CDN : 캐싱됨. 부트스트랩서버를 이용하기 때문에 운영하는 �
 </body>
 
 </html>
+
 ```
 
 
 
-## 3-3. 다양한 bootstrap 요소 사용하기.
+## 3.3. 다양한 bootstrap 요소 사용하기.
 
 - 02_components.html
 
@@ -1891,6 +1898,7 @@ CDN : 캐싱됨. 부트스트랩서버를 이용하기 때문에 운영하는 �
 </body>
 
 </html>
+
 ```
 
 **button**
@@ -1915,6 +1923,1180 @@ CDN : 캐싱됨. 부트스트랩서버를 이용하기 때문에 운영하는 �
 > - 참고 - 부트스트랩 : <https://getbootstrap.com/>
 > - 참고 - Trello : <https://trello.com/> 그룹별로 자료를 공유하고, 표시하는 기능.
 > - 참고 - notion : <https://www.notion.so/> 온라인 앱 통합하여 사용 가능.(유료는 비쌈.)
+
+
+
+
+# 3. 190529 부트스트랩
+
+
+
+- 부트스트랩, 폰트어썸, daneden Animate.css사용을 사용하기 위한  기본 템플릿[.html]
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- 폰트 어썸 --><script defer src="https://use.fontawesome.com/releases/v5.8.2/js/all.js" integrity="sha384-DJ25uNYET2XCl5ZF++U8eNxPWqcKohUUBUpKGlNLMchM7q4Wjg2CUpjHLaL8yYPH" crossorigin="anonymous"></script>
+	<!-- daneden Animate.css 가져오기. 사용법은 Github에 나옴. --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>title</title>
+</head>
+
+<body>
+	
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>
+```
+
+> 이하에서는 바디만 작성(부트스트랩CND제외). 헤더에 추가하는 내용은 있는 경우 추가된 내용만 작성함.
+
+
+
+## 3.4. 애니메이션 효과 사용하기.
+
+- 03_animate.html
+
+```html
+<head>
+	<style>
+		/* 웹폰트 사용 설정. 폰트를 직접 다운받아서 사용하는 것이 아니라 직접 사용함. */
+		@import url('https://fonts.googleapis.com/css?family=Yeon+Sung&display=swap&subset=korean');
+		body {
+			font-family: 'Yeon Sung', cursive;
+		}
+        
+        
+		.square {
+			width: 100px;
+			height: 100px;
+		}
+		p {
+			/* 텍스트가 1줄일 경우 위아래 정렬하는 방법. 박스의 사이즈와 라인 높이를 같게 함. */
+			line-height: 100px; 
+		}
+		.square:hover { /* :hover는 마우스를 올렸을 때 옵션. */
+			background-color: crimson !important; /* !important를 이용하여 우선순위를 높임. */
+			opacity: 0.7; /* 투명도 설정. */
+            /* jello라는 효과를 사용함. 2s는 2초동안 천천히 움직임 설정. */
+			animation: jello 2s infinite; /* infinite 설정은 무한 반복 설정. */
+		}
+	</style>
+</head>
+<!---------------------------------------------------------------------------->
+<body>
+    <!-- jello 라는 효과, 2초 딜레이 후, slow로 느리게 작동, 무한반복은 infinite -->
+	<h1 class="animated jello delay-2s slow">EXAMPLE</h1>
+	<br>
+	<div class="container">
+		<div class="square bg-primary d-inline-block mx-3 text-center">
+			<p>1</p>
+		</div>
+		<div class="square bg-primary d-inline-block mx-3 text-center">
+			<p>2</p>
+		</div>
+	</div>
+	폰트 어썸<br>
+	<i class="fas fa-money-bill-alt fa-5x faa-vertical animated-hover"></i>
+</body>
+```
+
+> font awesome은 SVG로 가져옴.
+
+
+
+## 3.5. flax사용하여 배치하기.
+
+더 자세한 [FLAX링크 CSS-TRICKS](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) 참초
+
+- 04_flax_00.html
+
+```html
+<head>
+	<style>
+    .container{
+        /* display: flex; */
+        height: 100vh;
+        border: 10px solid royalblue;
+        /* display: inline-flex; */
+        /* flex-direction: row; */ /* row가 기본값 */
+        flex-wrap: wrap;
+    }
+    .item{
+        width: 1000px;
+    }
+    </style>
+</head>
+<!---------------------------------------------------------------------------->
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+        <div class="item item4">4</div>
+        <div class="item item5">5</div>
+        <div class="item item6">6</div>
+        <div class="item item7">7</div>
+        <div class="item item8">8</div>
+        <div class="item item9">9</div>
+        <div class="item item10">10</div>
+        <!-- <div class="item item11">11</div>
+        <div class="item item12">12</div> -->
+    </div>
+</body>
+```
+
+**display : 택 1 ( flex | inline-flex );**
+
+> 해당  <u>**오브젝트가 여러개인 경우 정렬**</u>에 사용.
+>
+> flex -  한 줄에 1개만 가능.
+>
+> inline-flex - 한 줄에 여러 그릴 수 있음.
+
+**flex-direction: 택 1 ( row | row-reverse | column | column-reverse );**
+
+> 해당 오브젝트 <u>**내부에 있는 오브젝트의 정렬**</u>에 사용.
+>
+> row - 왼쪽에서 오른쪽으로 정렬함(default)
+>
+> row-reverse - 오른쪽에서 왼쪽으로 정렬함.
+>
+> column - 위에서 아래로 정렬함.  ★가로와 세로의 개념도 회전됨.
+>
+> column-reverse - 아래에서 위로 정렬함(반대로).  ★가로와 세로의 개념도 회전됨.
+
+
+
+- 04_flax_01.html
+
+```html
+<head>
+	<style>
+        .container{
+            display: flex;
+            border:10px solid royalblue;
+            height: 100vh;
+        }
+        .item{
+            height:200px;
+            height: 100vh;
+        }
+        .item1{
+            flex-grow: 1;
+        }
+        .item2{
+            flex-grow: 2;
+        }
+        .item3{
+            flex-grow: 4;
+        }
+    </style>
+</head>
+<!---------------------------------------------------------------------------->
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+        <!-- <div class="item item4">4</div>
+        <div class="item item5">5</div>
+        <div class="item item6">6</div>
+        <div class="item item7">7</div>
+        <div class="item item8">8</div>
+        <div class="item item9">9</div>
+        <div class="item item10">10</div>
+        <div class="item item11">11</div>
+        <div class="item item12">12</div> -->
+    </div>
+</body>
+```
+
+**flex-grow : 숫자**
+
+> 가로영역으로 배열하고, 남은 영역에서 flex-grow의 상대비율로 너비를 맞춤.
+
+
+
+- 04_flax_02.html
+
+```html
+<head>
+	<style>
+        .container{
+            display: flex;
+            border:10px solid royalblue;
+            height: 100vh;
+            /* 상단 정렬 */
+            align-items:flex-start;
+            /* 하단 정렬 */
+            align-items:flex-end;
+            /* 하단 정렬 */
+            align-items:center;
+            /* 상하단 꽉차게 (기본값) */
+            align-items: stretch;
+            /* 폰트의 밑줄에 맞게 */
+            align-items: baseline;
+        }
+        .item{
+            width: 300px;
+            border: 10px solid olive;
+            /* 왼쪽 정렬{기본} */
+            /* justify-content: flex-start; */
+            /* 오른쪽 정렬 */
+            /* justify-content: flex-end; */
+            /* 중간 정렬 */
+            justify-content: center;
+            /* 균등 좌우 정렬(안쪽 여백은 좌우 여백의 2배 */
+            /* justify-content: space-around; */
+        }
+        .item1{
+            font-size:2rem;
+        }
+        .item2{
+            font-size:10rem;
+        }
+        .item3{
+            font-size:5rem;
+        }
+    </style>
+</head>
+<!---------------------------------------------------------------------------->
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+    </div>
+</body>
+```
+
+**align-items : 택1 (flex-start | flex-end | center | stretch | baseline);**
+
+> 컨테이너 내부의 가로배열된 오브젝트의 높이방향 정렬 방식을 결정함.
+>
+> flex-start : 해당 아이템들이 컨테이너의 윗줄에 맞춤.
+>
+> flex-end : 해당 아이템들이 컨테이너의 아랫줄에 맞춤.
+>
+> center : 가운데 맞춤.
+>
+> stretch : 컨테이너를 꽉 채우도록 세로로 늘림.
+>
+> baseline : 해당 아이템의 텍스트 밑단을 맞추어 정렬함.
+
+**justify-content : 택1 (flex-start | flex-end | center | space-between | space-around | space-evenly)**
+
+> 컨테이너 내부의 가로배열된 오브젝트의 가로방향 정렬 방식을 결정함.
+>
+> flex-start : 왼쪽으로 붙임.
+>
+> flex-end : 오른쪽으로 붙임.
+>
+> center : 모아서 가운데로
+>
+> space-around : 아이템 양 쪽 끝에 일정한 여백을 차지하도록함. 양쪽 끝 여백은 아이템 사이 여백의 절반.
+>
+> space-evenly : 양 끝을 포함하여 일정한 여백을 만들어줌.
+
+
+
+- 04_flax_03.html
+
+```html
+<head>
+	<style>
+        body {
+            background-color: darkmagenta;
+        }
+        .container {
+            display: flex;
+            border: 10px solid royalblue;
+            height: 100vh;
+        }
+        .item {
+            width: 300px;
+            border: 10px solid olive;
+            height: 300px;
+            line-height: 300px;
+        }
+        .item2{
+			height: 100%;
+		}
+		.item8{
+			align-self: flex-start;
+		}
+		.item4{
+			align-self: flex-end;
+		}
+    </style>
+</head>
+<!---------------------------------------------------------------------------->
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+        <div class="item item4">4</div>
+        <div class="item item5">5</div>
+        <div class="item item6">6</div>
+        <div class="item item7">7</div>
+        <div class="item item8">8</div>
+        <div class="item item9">9</div>
+        <div class="item item10">10</div>
+        <div class="item item11">11</div>
+        <div class="item item12">12</div>
+    </div>
+</body>ㅇ
+```
+
+**align-self : 택1 (flex-start  | flex-end)**
+
+> 해당 오브젝트의 세로방향 위치를 결정함.
+>
+> flex-start : 위쪽을 기준으로 맞춤.
+>
+> flex-end : 아래쪽을 기준으로 맞춤.
+
+
+
+- 04_flax_04.html
+
+```html
+<head>
+	<style>
+        body {
+            background-color: darkmagenta;
+        }
+        .container {
+            display: flex;
+            border: 10px solid royalblue;
+            height: 100vh;
+        }
+        .item {
+            width: 300px;
+            border: 10px solid olive;
+            height: 300px;
+            line-height: 300px;
+        }
+        .item1{
+            order:0;
+            /* 기본값이 0 */
+        }
+        .item2{
+            order:1;
+            /* order가 더 작은 것 보다 뒤로 감. 음수 가능 */
+        }
+        .item5{
+            order:-2;
+        }
+    </style>
+</head>
+<!---------------------------------------------------------------------------->
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+        <div class="item item4">4</div>
+        <div class="item item5">5</div>
+        <div class="item item6">6</div>
+        <div class="item item7">7</div>
+        <div class="item item8">8</div>
+        <div class="item item9">9</div>
+        <div class="item item10">10</div>
+        <div class="item item11">11</div>
+        <div class="item item12">12</div>
+    </div>
+</body>
+```
+
+**order : 숫자**
+
+> 해당 아이템들의 정렬 기준.
+>
+> defualt = 0, 음수 가능, order가 작으면 왼쪽, 크면 오른쪽으로 감.
+
+
+
+- 05_col.html
+
+```html
+<head>
+	<link rel="stylesheet" href="col_temp.css">
+</head>
+<!---------------------------------------------------------------------------->
+<body>
+    <!-- JUSTIFY-CONTENT
+    ============================================ -->
+    <div class="container">
+        <h1 class="display-1 text-center">JUSTIFY-CONTENT</h1>
+        <br>
+        <!-- justify-content-center -->
+        <div class="row justify-content-center">
+            <div class="col-2">1</div>
+            <div class="col-2">2</div>
+            <div class="col-2">3</div>
+        </div>
+        <br>
+        <!-- justify-content-start -->
+        <div class="row justify-content-start">
+            <div class="col-2">1</div>
+            <div class="col-2">2</div>
+            <div class="col-2">3</div>
+        </div>
+        <br>
+        <!-- justify-content-end -->
+        <div class="row justify-content-end">
+            <div class="col-2">1</div>
+            <div class="col-2">2</div>
+            <div class="col-2">3</div>
+        </div>
+        <br>
+        <!-- justify-content-between -->
+        <div class="row justify-content-between">
+            <div class="col-2">1</div>
+            <div class="col-2">2</div>
+            <div class="col-2">3</div>
+        </div>
+        <br>
+        <!-- justify-content-around -->
+        <div class="row justify-content-around">
+            <div class="col-2">1</div>
+            <div class="col-2">2</div>
+            <div class="col-2">3</div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+    <!-- /JUSTIFY-CONTENT -->
+
+    <br>
+    <br>
+
+    <!-- ALIGN ITEMS
+    ============================================ -->
+    <div class="container">
+        <h1 class="display-1 text-center">ALIGN ITEMS</h1>
+        <br>
+        <!-- align-items-center -->
+        <div class="row row-vh align-items-center">
+            <div class="col">1</div>
+            <div class="col">2</div>
+            <div class="col">3</div>
+        </div>
+        <br>
+        <div class="row row-vh align-items-start">
+            <div class="col">1</div>
+            <div class="col">2</div>
+            <div class="col">3</div>
+        </div>
+        <br>
+        <div class="row row-vh align-items-end">
+            <div class="col">1</div>
+            <div class="col">2</div>
+            <div class="col">3</div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+    <!-- /ALIGN ITEMS -->
+
+    <br>
+    <br>
+
+    <!-- ALIGN SELF
+    ============================================ -->
+    <div class="container">
+        <h1 class="display-1 text-center">ALIGN SELF</h1>
+        <br>
+        <div class="row align-items-center row-vh">
+            <div class="col align-self-start">1</div>
+            <div class="col align-self-center">2</div>
+            <div class="col align-self-end">3</div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+    <!-- /ALIGN SELF -->
+
+</body>
+```
+
+- col_temp.css
+
+```css
+body {
+    margin: 5rem auto;
+    background-color: darkslategray;
+    color: white;
+}
+
+.container {
+    margin: 10px auto;
+    padding: 20px auto;
+    border: 10px solid yellow;
+}
+
+.container h1 {
+    text-transform: uppercase;
+}
+
+.row {
+    border: 10px solid lightblue;
+}
+
+.container>.row>div {
+    padding: 20px 10px;
+    border: 10px solid white;
+    font-size: 50px;
+    text-align: center;
+}
+
+.container>.row>div:nth-child(odd) {
+    background: orange;
+}
+
+.container>.row>div:nth-child(even) {
+    background: green;
+}
+
+.row-vh {
+    height: 500px;
+}
+
+```
+
+justify-content-\***
+
+> 내부의 오브젝트 정렬에 사용.
+
+**align-items-***
+
+> 내부의 오브젝트 정렬에 사용.
+
+**align-self-***
+
+> 해당 오브젝트의 세로위치 변경에 사용.
+
+
+
+
+
+------
+
+# ※ 참고자료 190529
+
+> - 참고 - 웹폰트 사이트 : <https://fonts.google.com/>
+> - 참고 - 폰트어썸 : <https://fontawesome.com/>
+> - 참고 - 폰트어썸 애니메이션 : <https://www.npmjs.com/package/font-awesome-animation>
+> - 참고 - 폰트어썸 애니메이션 : <https://l-lin.github.io/font-awesome-animation/>
+> - 참고 - 플랫아이콘 : <https://www.flaticon.com/>
+> - flex 정리된 된 사이트 1 :  <https://css-tricks.com/snippets/css/a-guide-to-flexbox/>
+> - flex 정리된 된 사이트 2 : https://naradesign.github.io/article/flex-justify-align.html
+> - flex 간단한 게임 : <https://flexboxfroggy.com/#ko>
+> - <https://startbootstrap.com/>
+> - <http://www.pythontutor.com/>
+
+
+
+
+# 5. 190530 Flask
+
+**Web?**
+
+> 클라이언트(웹브라우저)가 서버에 정보를 주고 받는 것.
+
+Get : 데이터를 노출된 상태로 그대로 보냄.
+Post : 데이터를 숨겨서 보냄.
+
+
+
+## 5.0. 미리 알아둘 것. -데코레이터
+
+- 데코레이터 사용 예시
+
+```python
+def hello(func):
+    def wrapper(): #감싸주는 함수.
+        print('HIHIHI')
+        func()
+        print('HIHI')
+    return wrapper
+
+#기존함수를 수정하지 않고, 다른 함수의 개념을 가져와서 사용함.
+@hello # 함수이름을 써줌.
+def bye():
+    print('BYEBYE')
+
+if __name__ == '__main__':
+    bye()
+```
+
+- 결과
+
+```
+HIHIHI
+BYEBYE
+HIHI
+```
+
+**데코레이터 @함수**
+
+> 기존의 함수를 수정하지 않고, 다른 함수의 개념을 가져올 수 있음.
+
+
+
+## 5.1. Flask 기초 예제
+
+Flask 설치 : `pip install flask`
+
+- hello.py
+
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
+```
+
+**실행 명령 : cmd 혹은 git bash에서`FLASK_APP=hello.py flask run`**
+
+> 플라스크는 app.py를 기본적으로 인식
+> flask라는 이름의 파일은 인식 불가.
+> `export FLASK_APP=hello.py` (FLASK_APP=hello.py 환경변수에 등록)하면 flask run만 하면 flask run으롯 실행 가능.
+
+**app=Flask(\_\_name\_\_)**
+
+> app말고 다른 이름을 쓰면 별도의 설정이 필요함.
+> 인스턴스를 생성시켜 줌.
+
+
+
+## 5.2. Flask 사용.
+
+- app.py   ***이하  app=Flask(\_\_name\_\_) , debug 는 호출되어 있다고 보고) 함수만 표시함.***
+
+```python
+@app.route('/') # app.route 함수가 요청을 받고, 처리하도록 도와주는 함수.
+def index(): # 뷰 함수
+    return 'Hellow World !'
+
+@app.route('/hello')
+def hello():
+    return '반갑습니다 ! !2'
+
+@app.route('/user/<int:username>') # 변화되는 값이면 < >사용. 숫자면 int: 사용.
+def show_user_profile(username):
+    # show the user profile for that user
+    return f'User : {username}'
+
+@app.route('/projects/') # 마지막에 /를 붙이는 경우 상관 없이 접속가능. 주로 메인페이지.
+def projects():
+    return 'The project page'
+
+@app.route('/about') # 마지막에 /를 붙이는 경우 접속 불가.
+def about():
+    return 'The about page'
+
+@app.route('/greeting/<string:name>') # default는 string
+def greeting(name):
+    return f'반갑습니다! {name}님!'
+
+@app.route('/cube/<int:num>') # default는 string
+def cube(num):
+    result = num ** 3
+    return str(result)
+
+@app.route('/html_tag')
+def html_tag():
+    return '<h1>안녕하세요!!</h1>' \
+           '<ul>' \
+           '    <li>1 li</li>' \
+           '    <li>2 li</li>' \
+           '</ul>'
+        # 태그를 직접 보낼 수 있음.
+
+
+if __name__ =='__main__': #이 파이썬 파일이 직접 실행된 코드라면 if문 코드를 동작함.
+    app.run(debug=True) #서버를 껏다 킬 필요가 없도록 함. 서버가 실행중에도 디버깅을 함.
+```
+
+**app.route('/"url"',methods=['POST'])**
+
+> url 주소를 주워줌.
+> url에 '/'를 넣으면 주소에 '/'를 넣은 것과 안넣은 것에 상관 없이 접속가능.
+> methods=['POST']를 입력하면 POST방식을 사용. 생략하면 get방식 사용.
+
+**바뀔 수 있는 값 사용 : <변수 이름>**
+
+> **url 주소에서 값이 바뀔 수 있는 경우에 사용함.**
+> default는 string:
+> 만약 타입을 지정해주려면 int: 등의 옵션을 주어야함.
+
+**return 알 것 : 반드시 str 형식으로 바꾸어서 리턴하여야 함.**
+
+> str형식이 아닌 것을 리턴하면 오류가 발생함.
+
+**@app.run(debug=True)**
+
+> 코드변경을 디버그로 쫓음.
+> 파일 수정 시 자동으로 디버그하여 수정된 내용이 적용됨. 
+
+**\_\_name\_\_**
+
+> 현재 스크립트 파일이 시작점인지, 모듈인지 판단함.
+> 만약 import하여 파일을 (모듈로) 시작하면 \_\_name\_\_ 는 '모듈 이름'이 됨.
+> 만약 직접 실행하면 \_\_name\_\_ 는 '\_\_main\_\_' 이 됨.
+
+
+
+### 5.2.1 실습 - 점심메뉴 정하기
+
+1. /lunch/3 으로 요청이 들어옴.(3, 4, 5 숫자는 다양하게 들어 올 수 있음.)
+2. 메뉴 리스트에서 랜덤으로 인원 수 만큼 메뉴를 골라서 출력
+
+```python
+@app.route('/lunch/<int:people>') # default는 string
+def lunch(people):
+    menu = ['짬뽕', '짜장면', '볶음밥', '곰탕', '돼지국밥', '비빔밥', '삼선짜장', '중화비빔밥']
+    result = random.sample(menu, people)
+    return str(result)
+```
+
+
+
+## 5.3. templates 사용 (플라스크는 jinja html 문법 사용.)
+
+**반드시 templates라는 폴더안에 html파일을 작성하여 사용.**
+
+```python
+from flask import Flask, render_template, request
+#render_template을 하여야 사용가능함.
+```
+
+**render_template**
+
+> templates 폴더에 있는 html 문서를 jinja html 문법을 이용하여 사용 할 수 있게 해줌.
+
+**request**
+
+> 해당 url로 들어갈 때 어떤 값을 받아 올 때 사용.
+> request.args.get('html변수명') : get방식으로 받아옴.(URL에 나타남.)
+> request.form.get('html변수명') : POST방식으로 받아옴.(URL에 보이지 않음.)
+
+
+
+- app.py, templates/index.html : 간단한 template 예시
+
+```python
+@app.route('/html_render')
+def html_render():
+    return render_template('index.html')
+```
+
+```html
+<h1>여기는 템플릿입니다.</h1>
+```
+
+
+
+- app.py, templates/hello.html : string 넘겨받아서 쓰기.
+
+```python
+#넘겨받아서 템플릿에 쓰기.
+@app.route('/html_name/<name>')
+def html_name(name):
+    return render_template('hello.html', name=name)
+            # 왼쪽은 변수명(템플릿에서 사용할 이름), 오른쪽은 받은 값.
+
+```
+
+```html
+<h1>안녕하세요!, {{name}}</h1>
+
+```
+
+**render_template('html파일', 템플릿 변수명 = python 변수명)**
+
+> 변수를 받아서 사용하는 방법.
+
+**{{템플릿 변수명.}}**
+
+> 변수를 받아서 템플릿에 띄우는 방식.
+
+
+
+- app.py, templates/cube.html : 여러개의 변수 넘기기.
+
+```python
+@app.route('/html_cube/<int:num>')
+def html_cube(num):
+    result = num ** 3
+    return render_template('cube.html', num=num, cube=result)
+
+```
+
+```html
+<h1>한 변의 길이가 {{num}}인 정육면체의 부피는 {{cube}}이다.</h1>
+
+```
+
+
+
+- app.py, templates/index.html : 간단한 template 예시
+
+```python
+@app.route('/html_render')
+def html_render():
+    return render_template('index.html')
+
+```
+
+```html
+<h1>여기는 템플릿입니다.</h1>
+
+```
+
+
+
+- app.py  ,  template/pong.html  ,  template/ping.html  :  보내고 링크따라 가서 받기 : get방식.
+
+```python
+# 보낸 요청 받기(ping-pong)
+@app.route('/ping')
+def ping():
+    return render_template('ping.html')
+
+@app.route('/pong')
+def pong():
+    user_name = request.args.get('name')
+    return render_template('pong.html', user_name=user_name)
+
+```
+
+```html
+<!--pong.html-->
+<form action="/pong">
+	<input type="text" name="name">
+	<input type="submit" value="핑!!">
+	<!--	핑!!이 name이라는 이름으로 /pong으로 넘어감.	-->
+</form>
+
+```
+
+```html
+<!--ping.html-->
+<h1>{{user_name}}</h1>
+
+```
+
+
+
+- app.py  ,  template/pong_new.html  ,  template/ping_new.html  :  보내고 링크따라 가서 받기 : POST방식.
+
+```python
+# post 방식의 ping-pong
+# 보낸 요청 받기(ping-pong)
+@app.route('/ping_new')
+def ping_new():
+    return render_template('ping_new.html')
+
+@app.route('/pong_new', methods=['POST'])
+def pong_new():
+    user_name = request.form.get('name') # 포스트 방식은 form에 있음.
+    return render_template('pong_new.html', user_name=user_name)
+
+```
+
+```html
+<!--pong_new.html-->
+<form action="/pong_new" method="POST"> <!-- git 방식이 디폴트 -->
+	new
+	<input type="text" name="name">
+	<input type="submit" value="핑!!">
+	<!--	핑!!이 name이라는 이름으로 /pong으로 넘어감.	-->
+</form>
+
+```
+
+```html
+<!--ping_new.html-->
+new
+<h1>{{user_name}}</h1>
+
+```
+
+
+
+### 5.3.1. 실습 - 저녁메뉴 정하기
+
+1. /dinner 로 요청이 들어왔을 때
+2. 저녁 메뉴에서 랜덤으로 하나를 뽑아서 이미지와 메뉴 이름을 응답.
+3. 출력 예시
+   오늘 저녁은 ???입니다.
+   [이미지]
+
+```python
+@app.route('/dinner')
+def dinner():
+    menu = {'짬뽕':'',
+            '짜장면':'',
+            '볶음밥':'',
+            }
+    pick = random.choice(list(menu.keys()))
+    # url1=menu['짜장면'] # 없는 메뉴가 나오면 key err
+    url2=menu.get('짜장면') # 없는 메뉴면 none 리턴
+    return render_template('dinner.html', pick=pick, url=url2)
+
+```
+
+```html
+<h1>오늘 저녁은 {{dinner}}입니다.</h1>
+    <br>
+    <img src="{{url}}" alt="{{pick}}사진">
+
+```
+
+
+
+### 5.3.2. 실습 - 저녁메뉴 정하기
+
+1. /dinner 로 요청이 들어왔을 때
+2. 저녁 메뉴에서 랜덤으로 하나를 뽑아서 이미지와 메뉴 이름을 응답.
+3. 출력 예시
+   오늘 저녁은 ???입니다.
+   [이미지]
+
+```python
+@app.route('/lotto')
+def lotto():
+    number_list = list(range(1,46))
+    lucky = random.sample(number_list, 6)
+    # 진자 템플릿은 연산이 가능함.
+    return render_template('lotto.html', lucky=lucky)
+
+```
+
+```html
+<h1>{{lucky}}</h1>
+	{% for num in lucky %}<!-- for문을 열어줌.	-->
+		<h2>{{num}}</h2>
+	{% endfor %}<!-- for문을 닫아줌..	-->
+
+```
+
+**{% 가려질 내용. %}**
+
+> 작성 후 템플릿이 나갈 때는 가려져서 나가지 않을 수 있음.
+
+**for num in [list]  ,  endfor**
+
+> jinja 문법은 연산이 가능함.
+> for 문을 사용한 후 종료를 해야함.
+
+
+
+### 5.3.3. 실습 - FakeNaver
+
+```python
+#Fake naver
+@app.route('/naver')
+def naver():
+    return render_template('naver.html')
+
+```
+
+```html
+<h1>네이버 검색</h1>
+<form action="https://search.naver.com/search.naver" target="_blank">
+	<input type="text" name="query">
+	<input type="submit" value="검색">
+</form>
+
+```
+
+
+
+### 5.3.4. 실습 - FakeGoogle
+
+```python
+@app.route('/google')
+def google():
+    return render_template('google.html')
+
+```
+
+```html
+<h1>구글 검색</h1>
+	<form action="https://www.google.com/search" target="_blank">
+	<input type="text" name="query">
+	<input type="submit" value="검색">
+</form>
+
+```
+
+
+
+### 5.3.5. 실습 - 신이 나를 만들 때.
+
+- god_st.html  ,  god_re.html
+
+```python
+@app.route('/god_st')
+def got_st():
+    return render_template('/god_st.html')
+
+@app.route('/god_re')
+def got_re():
+    name = request.args.get('name')
+    material_list = ['기민함', '돈 복', '멍청함', '똑똑함', '시끄러움']
+    reaction_list = ['조금만...', '적당히...', '으어어어...', '그냥 넣지 말고...']
+    mat = random.sample(material_list, 3)
+    print(mat)
+    rea = random.sample(reaction_list, 3)
+    print(rea)
+    zziipp = zip(mat,rea)
+    return render_template('/god_re.html', name=name,  zziipp=zziipp)
+
+```
+
+```html
+<form action="/god_re"> <!-- git 방식이 디폴트 -->
+	god
+	<input type="text" name="name">
+	<input type="submit" value="신의 응답">
+	<!--	핑!!이 name이라는 이름으로 /pong으로 넘어감.	-->
+</form>
+
+```
+
+```html
+god
+<h2>{{name}}님을 만들 때</h2>
+{% for mat, rea in zziipp %}<!-- for문을 열어줌.	-->
+		<h2>{{mat}}을 {{rea}}</h2>
+	{% endfor %}<!-- for문을 닫아줌..	-->
+
+```
+
+
+
+### 5.3.6. 실습 - Lotto 당첨번호 확인
+
+- lotto_check.html  ,  lotto_result.html
+
+```python
+from flask import Flask, render_template, request
+import requests
+import random
+
+app = Flask(__name__)
+
+@app.route('/lotto_check')
+def lotto_check():
+    return render_template('lotto_check.html')
+
+@app.route('/lotto_result')
+def lotto_result():
+    lotto_round = request.args.get('lotto_round')
+    lotto_num = request.args.get('lotto_num')
+    if lotto_num=='':
+        lotto_num = get_random()
+    else:
+        lotto_num = sorted([int(lotto_num.split()[i]) for i in range(0, 6)])
+        print(type(lotto_num[0]))
+
+    response = requests.get(f'https://dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={lotto_round}')
+    lotto = response.json()
+    '''
+    winner = []
+    for i in range(1,7):
+        winner.append(lotto[f'drwtNo{i}'])
+    '''
+    #list comprehension
+    winner = [lotto[f'drwtNo{i}'] for i in range(1,7)]
+    bonus = lotto["bnusNo"]
+    res = check_luck(lotto_num, winner, bonus)
+    return render_template('lotto_result.html',
+                           lotto_round=lotto_round,
+                           winner =f'{winner} + {bonus}',
+                           my_num = f'{lotto_num}',
+                           res=res)
+    # 1. 내 번호 리스트 만들기
+    # 2. 내 번호를 lotto_check 에서 입력받는 6개 번호로 만들기
+    # 3. 당첨번호와의 교집합
+    # 4. 조건에 따라 1등부터 꽝까지 결과값을 lotto_result로 출력.
+
+def get_random():
+    lucky = sorted(random.sample(range(1,46),5))
+    return lucky
+
+def check_luck(lucky_list, winner_list, winner_bonus_int):
+    length = len(lucky_list)
+    if length==6:
+        lucky_set = set(lucky_list)
+        winner_set = set(winner_list)
+        diff_set = lucky_set - winner_set
+        len_diff = len(diff_set)
+        if len_diff == 0:
+            return '1등'
+        elif len_diff == 1:
+            if winner_bonus_int in diff_set:
+                return '2등'
+            else:
+                return '3등'
+        elif len_diff == 2:
+            return '4등'
+        elif len_diff == 3:
+            return '5등'
+        else:
+            return '꽝'
+    elif length !=6:
+        return '다시 입력해주세요.'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+```
+
+```html
+<form action="lotto_result">
+    회&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp차 : <input type="text" name="lotto_round">
+    <br>
+    나의 번호 : <input type="text" name="lotto_num" value="빈칸이면 랜덤.">(띄어 쓰기로 구분)
+    <br>
+    <input type="submit" value="결과 확인!">
+</form>
+
+```
+
+```html
+<h1>회차 : {{lotto_round}}</h1>
+<h2>당첨 번호 : {{winner}}</h2>
+<h2>나의 번호 : {{my_num}}</h2>
+<h2>결과 : {{res}}</h2>
+
+```
+
+
+
+------
+
+# ※ 참고자료 190530
+
+> - 참고 - Flask 공식문서 : <http://flask.pocoo.org/>
+> - 참고 - Jinja 템플릿 문법 : <http://jinja.pocoo.org/>
 
 
 
