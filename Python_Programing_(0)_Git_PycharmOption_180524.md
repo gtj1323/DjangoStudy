@@ -82,7 +82,7 @@ Git에 대해서 알아 봅시다.
    git config --global user.email test@example.com`
    ※ 이름은 틀려도 큰 문제가 없지만 메일 주소가 틀리면 저장이 올바르게 되지 않음.
 3. **git 명령어 자동 색칠**
-   `git config --global color.ui ture`
+   `git config --global color.ui true`
 4. **설정 확인**
    `git config --global --list`
 5. **한글파일명 깨짐 해결**
@@ -148,9 +148,10 @@ Ex) `git clone git://github.com/example/test.git 폴더명 `
 3. **Staging Area의 파일 삭제**, 워킹 디렉토리에서는 파일을 지우지 않음.
    add 명령어로 Staging Area에 있는 파일을 지움.
    `git rm --cached log.txt` #log.txt 파일을 commit된 상태에서 뺌.
+   commit 하면 Repo에서 D(삭제)됨.
    `git rm log/\*log`
 
-4. 파일명 변경
+5. 파일명 변경
    `git mv 전파일명 새파일명`
    Ex) `git mv README.txt README`
 
@@ -160,7 +161,7 @@ Ex) `git clone git://github.com/example/test.git 폴더명 `
      `git rem README.txt`
      `git add README`
 
-5. commit 히스토리 조회하기
+6. commit 히스토리 조회하기
    `git log` 명령을 통해서 볼 수 있음.
    commit 고유한 hash값, commit 메세지, 시간과 날짜, 작성자<계정>을 전부 표시.
 
@@ -199,16 +200,18 @@ Ex) `git clone git://github.com/example/test.git 폴더명 `
      | %cr    | Committer date, relative                         |
      | %s     | Subject(커밋 메세지)                             |
 
-6. 파일 상태를 unstage 상태로 변경.
+7. 파일 상태를 unstage 상태로 변경.
      `git reset HEAD 파일명`
      이미 commit한 파일을 unstage 상태로 변경함.
+     commit 하면 수정, 삭제, 추가되지 않음.
 
-7. Modified 파일 되돌리기.
-	`git checkout -- 파일명` : 특정 파일을 가장 최근의 커밋 버전에서 꺼내어 복원함.
-	 위 명령은 로컬의 변경 내용을 변경 전 상태(HEAD)로 되돌림. 다만, 이미 인덱스에 추가된 변경 내용과 새로 생성한 파일은 그대로 남음.
-8. 파일 무시하기(.gitignore 파일)
-     로그, .class, .exe 등 자동생성, 등의 이유로 관리가 필요하지 않은  파일.
-     운영체제, 사용언어, 사용에디터에 따라 차이가 있음.
+8. Modified 파일 되돌리기.
+    `git checkout -- 파일명` : 특정 파일을 가장 최근의 커밋 버전에서 꺼내어 복원함.
+   위 명령은 로컬의 변경 내용을 변경 전 상태(HEAD)로 되돌림. 다만, 이미 인덱스에 추가된 변경 내용과 새로 생성한 파일은 그대로 남음.
+
+9. 파일 무시하기(.gitignore 파일)
+   로그, .class, .exe 등 자동생성, 등의 이유로 관리가 필요하지 않은  파일.
+   운영체제, 사용언어, 사용에디터에 따라 차이가 있음.
 
    - 작성 방법 (<https://www.gitignore.io/> 여기서 자동으로 만들 수 있음.)
 
@@ -220,8 +223,9 @@ Ex) `git clone git://github.com/example/test.git 폴더명 `
      build/	   # build/ 디렉터리에 있는 파일은 무시하지 않음.
      doc/*.txt  # 'doc/notes.txt' 같은 파일은 무시, doc/server/arch.txt는 무시하지 않음.
      ```
-10. 내장 GUI
-	`gitk`
+
+10. 내장 GUI 명령
+     `gitk`
 
 
 
@@ -260,5 +264,7 @@ Ex) `git clone git://github.com/example/test.git 폴더명 `
 >  - git 다운로드 사이트 : <https://git-scm.com/>
 >  - gitignore 사이트 : <https://www.gitignore.io/>
 >  - <https://rogerdudler.github.io/git-guide/index.ko.html>
->  - git 한글사용 설명 : <https://git-scm.com/book/ko/v2>
+>  - git 공식 한글사용 설명 : <https://git-scm.com/book/ko/v2>
+>  - git 입문 사용 설명 : <https://backlog.com/git-tutorial/kr/intro/intro1_1.html>
+>  - git 간편 사용 설명 : <https://rogerdudler.github.io/git-guide/index.ko.html>
 

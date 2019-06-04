@@ -4,7 +4,89 @@
 
 
 
-## 1.1. 파이썬으로 파일 다루기
+## 1.1. 파이썬 기본 다루기.
+
+### 1.1.1. 모듈과 시작점
+
+```python
+if __name__ == '__main__':
+    코드 작성
+```
+
+**\_\_main\_\_**
+
+> 모듈의 이름이 저장되는 변수.
+> 해당 파이썬 파일을 직접 실행할 때는 \_\_main\_\_ 이 됨.
+> 하지만 파일을 import 하는 방식으로 실행시킬 경우 \_\_모듈명\_\_로 나옴. Ex) \_\_app.py\_\_
+> 현재 스크립트 파일이 프로그램의 시작점(entry point) 인지 확인하는 작업에 사용.
+>
+> - 하지만, 파이썬 인터프리터로 스크립트 파일을 직접 실행했을 때는 모듈의 이름이 아니라 `__main__` 이 들어간다.
+> - 어떤 스크립트 파일이던 파이썬 인터프리터가 최초로 실행한 스크립트 파일의 `__name__` 에는 `__main__`이 들어간다.
+> - `app = Flask(__name__)`
+> `__name__` 파라미터는 Flask 어플리케이션을 구분하기 위한 구분자로 사용
+
+### 1.1.2. 집합 자료형(SET)
+
+ 집합(set)은 파이썬 2.3부터 지원되기 시작한 자료형. 집합에 관련된 것을 쉽게 처리하기 ㅜ이해 만들어진 자료형.
+```python
+s1 = set([1,2,3]) # {1,2,3}인 set리턴
+s2 = set("Hello") # {'e', 'H', 'l', 'o'}인 set리턴
+print(s1)
+```
+**set([list])**
+
+> 리스트와 같은 요소를 가진 set을 리턴함.
+
+- 특징
+	1. 반복 가능한 객체.
+	2. 중복을 허용하지않음.
+	3. 순서가 없음. (Unordered). 인덱싱으로 값을 얻을 수 없음.
+	자료형의 중복을 제거하기 위한 필터 역할로 종종 사용되기도 함.
+
+
+- 활용 방법
+     ```python
+     >>> s1 = set([1, 2, 3, 4, 5, 6])
+     >>> s2 = set([4, 5, 6, 7, 8, 9])
+     ```
+
+  1. 교집합
+
+     ```python
+     >>> s1 & s2
+     {4, 5, 6}
+     ```
+     ```
+     >>> s1.intersection(s2)
+     {4, 5, 6}
+     ```
+  
+  2. 합집합
+  
+     ```python
+     >>> s1 | s2
+     {1, 2, 3, 4, 5, 6, 7, 8, 9}
+     
+     >>> s1.union(s2)
+     {1, 2, 3, 4, 5, 6, 7, 8, 9}
+     ```
+
+  
+  5. 차집합
+     
+     ```python
+     >>> s1 - s2
+     {1, 2, 3}
+     >>> s2 - s1
+     {8, 9, 7}
+     
+     >>> s1.difference(s2)
+     {1, 2, 3}
+     >>> s2.difference(s1)
+     {8, 9, 7}
+     ```
+
+## 1.2. 파이썬으로 파일 다루기
 
 - dummy_ex\dummy.py : 성, 이름을 랜덤으로 석어 500개의 .txt파일을 생성
 
@@ -101,7 +183,7 @@ os.path.splitext(filename) 확장자와 파일명을 구분
 
 
 
-## 1.2. 파이썬으로 txt파일 다루기
+## 1.3. 파이썬으로 txt파일 다루기
 
 - text_ex\write_text.py : txt파일 몇줄 반복해서 작성.
 
@@ -170,7 +252,7 @@ with open('number.txt', 'w') as f:
 
 
 
-## 1.3. 파이썬으로 CSV파일 다루기
+## 1.4. 파이썬으로 CSV파일 다루기
 
 - csv_ex\write_csv.py : lunch에 있는 내용을 CSV파일로 만들어서 저장.
 
@@ -263,7 +345,7 @@ with open('lunch.csv', 'r', encoding='utf-8') as f:
 
 
 
-## 1.4. 스크래핑 기초
+## 1.5. 스크래핑 기초
 
 - scraping_ex\remind.py : 'https://finance.naver.com/sise/' 페이지에서 코스피지수를 출력함.
 
@@ -446,7 +528,7 @@ with open('MelonCart.txt', 'w', encoding='utf-8') as f:
 
 
 
-## 1.5. 파이썬으로 메일 보내기.
+## 1.6. 파이썬으로 메일 보내기.
 
 - email_ex\naver_text_email.py
 
@@ -689,4 +771,4 @@ print('이메일 전송 완료 !!')
 > - ChromeExtension  - ublock origin : 광고 차단.
 > - ChromeExtension  - Web Developer
 > - [emmet cheat sheet](https://docs.emmet.io/cheat-sheet/) -  html 작성에 유용한 툴.
-> - 
+> - python 문서 : <https://docs.python.org/ko/3.6/>
