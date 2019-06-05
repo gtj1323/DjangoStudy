@@ -36,12 +36,12 @@ intro\urls.py 에 urlpatterns에 `path('books/', include('books.urls')),` 등록
 > ```django
 > {% extends "base.html" %}
 > {% block content %}
->    <h1>유틸리티</h1>
->    <a href="/books/graduation/">수료까지 남은 시간</a><br>
->    <a href="/books/imagepick/">랜덤이미지</a><br>
->    <a href="/books/today/">오늘 날씨</a><br>
->    <a href="/books/ascii_new/">아스키 코드 변환기</a><br>
->    <a href="/books/original/">파파고 번역기</a>
+>    	<h1>유틸리티</h1>
+>    	<a href="/books/graduation/">수료까지 남은 시간</a><br>
+>    	<a href="/books/imagepick/">랜덤이미지</a><br>
+>    	<a href="/books/today/">오늘 날씨</a><br>
+>    	<a href="/books/ascii_new/">아스키 코드 변환기</a><br>
+>    	<a href="/books/original/">파파고 번역기</a>
 > {% endblock %}
 > ```
 
@@ -434,3 +434,39 @@ path('translated/', views.translated),
    <p>번역 : {{english}}</p>
 {% endblock %}
 ```
+
+
+
+
+
+---
+
+## Postman 사용법
+
+1. 설치
+2. 전송방법 선택(GET, POST 등)
+3. URL 입력
+4. GET 방식 : 전송방법에 따라 KEY, VALUE입력 자동으로 입력됨.
+	POST방식 : HEADERS에 요구되는 BODY와 KEY와 VALUE를 입력
+5. SEND하면 결과값을 돌려받아줌.
+
+
+
+**EX) 네이버 파파고 API를 Postman에서 사용하는 방법.**
+
+- 네이버 API 파파고 : HEADERS
+
+| KEY                   | VALUE                                        |
+| --------------------- | -------------------------------------------- |
+| X-Naver-Client-Id     | '네이버에서 어플리케이션을 등록하고 받은 ID'       |
+| X-Naver-Client-Secret | '네이버에서 어플리케이션을 등록하고 받은 Password' |
+
+- 네이버 API 파파고 : BODY (x-www-form-urlencoded 선택)
+
+| KEY     | VALUE            |
+| ------- | ---------------- |
+| source  | ko               |
+| target  | en               |
+| text    | '번역하고 싶은 말' |
+
+​	
