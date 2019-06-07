@@ -167,17 +167,17 @@ Ex) `git clone git://github.com/example/test.git 폴더명 `
 
    - `git log`명령 옵션.
 
-   | git log 옵션 키 | 설  명                                                       |
-   | --------------- | ------------------------------------------------------------ |
-   | -p              | 각 commit에 적용된 패치를 보여준다.                          |
-   | --stat          | 각 commit에서 수정된 파일의 통계 정보를 보여준다.            |
-   | --shortstat     | '--stat' 명령의 결과 중에 수정한 파일, 추가된 줄, 삭제된 줄만 보여준다. |
-   | --name-only     | commit 정보 중에서 수정된파일의 목록만 보여준다.             |
-   | --name-status   | 수정된 파일의 목록을 보여줌. <br />추가, 수정, 삭제한 것인지도 보여준다. |
-   | --abbrev-commit | 40자짜리 SHA-1 체크섬을 처음 몇자만 보여준다.                |
-   | --relative-date | '2주전' 처럼 상대적인 형식으로 시간을 보여줌.                |
-   | --graph         | 브랜치와 머지 히스토리 정보까지 아스키 그래프로 보여준다.    |
-   | --pretty        | 지정한 형식으로 보여줌.<br />-\<n>, --pretty(oneline, short, full, fuller, format)<br />옵션을 사용. format은 원하는 형식으로 출력할 때 사용.<br /><br />Ex) <br />-\<n>  :  최근 n개의 커밋 목록 출력<br />--pretty  =>  출력포맷 지정 해주는 옵션<br />--pretty=oneline<br />--pretty=short<br />--pretty=full<br />--pretty=fuller<br />--pretty=format:"패턴" |
+	   | git log 옵션 키 | 설  명                                                       |
+	   | --------------- | ------------------------------------------------------------ |
+	   | -p              | 각 commit에 적용된 패치를 보여준다.                          |
+	   | --stat          | 각 commit에서 수정된 파일의 통계 정보를 보여준다.            |
+	   | --shortstat     | '--stat' 명령의 결과 중에 수정한 파일, 추가된 줄, 삭제된 줄만 보여준다. |
+	   | --name-only     | commit 정보 중에서 수정된파일의 목록만 보여준다.             |
+	   | --name-status   | 수정된 파일의 목록을 보여줌. <br />추가, 수정, 삭제한 것인지도 보여준다. |
+	   | --abbrev-commit | 40자짜리 SHA-1 체크섬을 처음 몇자만 보여준다.                |
+	   | --relative-date | '2주전' 처럼 상대적인 형식으로 시간을 보여줌.                |
+	   | --graph         | 브랜치와 머지 히스토리 정보까지 아스키 그래프로 보여준다.    |
+	   | --pretty        | 지정한 형식으로 보여줌.<br />-\<n>, --pretty(oneline, short, full, fuller, format)<br />옵션을 사용. format은 원하는 형식으로 출력할 때 사용.<br /><br />Ex) <br />-\<n>  :  최근 n개의 커밋 목록 출력<br />--pretty  =>  출력포맷 지정 해주는 옵션<br />--pretty=oneline<br />--pretty=short<br />--pretty=full<br />--pretty=fuller<br />--pretty=format:"패턴" |
 
    - `git log --pretty=format:"패턴 옵션"`
      Ex) `git log --pretty=format:"%h - %an, %ar : %s"
