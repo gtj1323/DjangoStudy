@@ -130,7 +130,7 @@ Django DB 설정 참고 : <https://docs.djangoproject.com/ko/2.2/ref/settings/#s
 	
 	> 모델에서도 사용자가 지정한 TIME_ZONE 값을 적용시기기 위해 False로 설정함.
 
-#### 6.4.3.2. Django ORM으로 DDL, DCL, DML.
+#### 6.4.3.2. Django ORM으로 DDL, DCL, DML 만들기(모델 작성).
 DML : DB를 조작하는 언어. CRUD
 DCL : DB 접근, 수정 등의 권한
 DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
@@ -274,7 +274,7 @@ DB는 아직 생성되지 않음.
 	> # Set이 아닌 1개의 행을 객체로 가지고 있음.
 	> ```
 	> 반드시 board.save() 를 해주어야 HDD에 적용됨.
-> 1개의 행을 객체로 가짐.
+	> 1개의 행을 객체로 가짐.
 	> 여기서 title, content는 DBmodel 설계시 작성한 것들.
 
 	**※ DB에 데이터 입력 2**
@@ -540,7 +540,7 @@ DB는 아직 생성되지 않음.
 	```
 	
 
-### 6.5.2. 새로 글 쓰기.
+### 6.5.2. 새로 글 쓰기(CREATE) 2개 Method.
 
 - views.py 에 추가.
   ```python
@@ -601,12 +601,12 @@ DB는 아직 생성되지 않음.
 	
 	> 해당 URL로 보냄.
 
-### 6.5.3. 세부내용 보기.
+### 6.5.3. 세부내용 보기(READ).
 
 - views.py 에 추가.
   ```python
   def detail(request, pk):
-      # 요청으로 들어온 pk 값으로 해당 글을 찾아옴.
+  	# 요청으로 들어온 pk 값으로 해당 글을 찾아옴.
     board = Board.objects.get(pk=pk)
       context = {
           'board':board,
@@ -614,14 +614,15 @@ DB는 아직 생성되지 않음.
       return render(request, 'boards/detail.html', context)
   ```
   
-- boards/urls.py 에 urlpatterns list에 추가.
+- boards/urls.py 에 urlpatterns list에 추가 및 수정
   
   ```python
+  
   path('<int:pk>/',views.detail)
   ```
 
 
-- boards/templates/boards/index.html
+- boards/templates/boards/detail.html
   ```django
   {% extends "base.html" %}
   {% block content %}
@@ -636,13 +637,290 @@ DB는 아직 생성되지 않음.
   {% endblock %}
   ```
 
-### 6.5.4. 관리자
+### 6.5.4. 글 삭제(DELETE) GET 방식.
 
-## 6.5. Django_extention.
+- views.py 에 추가.
+	```python
+	def delete(request, pk):
+	    board = Board.objects.get(pk=pk)
+	    board.delete()
+	    # return redirect('/boards/')
+		return redirect('boards:index')
+	```
+	
+	**redirect('boards:index')**
+	
+	> return redirect('/boards/') 와 같은 방식으로 작동.
+	> **index** :  boards/urls에서 각 함수를 호출하는 path에 name='index'를 주워줬기 때문에 사용이 가능함.
+	> **boards** : boards/urls에서 app_name='boards'로 지정해줬기 때문에 주는 것.
+	> 만약 설정하지 않았으면 index로 써도 무방.
+	
+- boards/urls.py 에 urlpatterns list에 추가 및 수정
+
+  - 수정 전.
+
+  ```python
+  from django.urls import path
+  from . import views
+  
+  urlpatterns=[
+      path('', views.index),
+      path('new/', views.new),
+      path('create/', views.create),
+      path('<int:pk>/', views.detail),
+      path('<int:pk>/delete/', views.delete),
+  ]
+  ```
+
+  - 수정 후.
+
+  ```python
+  from django.urls import path
+  from . import views
+  
+  app_name = 'boards' # Django의 app의 이름을 지정해줌.
+  urlpatterns=[
+      path('', views.index, name='index'),
+      path('new/', views.new, name='new'),
+      path('create/', views.create, name='create'),
+      path('<int:pk>/', views.detail, name='detail'),
+      path('<int:pk>/delete/', views.delete, name='delete'),
+  ]
+  ```
+  
+  **app_name**
+
+  > 해당 app의 이름을 지정해줌. 해당 앱에서 뭔가를 사용할 경우 namesapce처럼 작동.
+  
+- boards/templates/boards/detail.html
+  
+  ```django
+  {% extends "base.html" %}
+  {% block content %}
+      <h1>DETAIL</h1>
+      <p>{{board.pk}}</p>
+      <hr>
+      <p>제목 : {{board.title}}</p>
+      <p>내용 : {{board.content}}</p>
+      <pre>생성 : {{board.created_at}}</pre>
+      <p>수정 : {{board.updated_at}}</p>
+      <hr>
+  	<a href="{% url 'boards:delet' board.pk %}">[삭제]</a></br>
+  	<!--<a href="/boards/">목록으로</a>-->
+      <a href="{% url 'boards:index' %}">목록으로</a>
+  {% endblock %}
+  ```
+  **\<a href="{% url 'boards:index' %}">목록으로\</a>**
+  > \<a href="/boards/">목록으로\</a> 와 같음.
+  > 하지만 url을 찾을 수 없을 때 오류가 나옴.
+  > boards는 boards/urls.py의 app_name
+  > index는 boards/urls.py의 urlpatterns에 path에 지정한 name.
+
+  **\<a href="{% url 'boards:delete' board.pk %}">[삭제]\</a>**
+  
+  > \<a href="/boards/{{board.pk}}/delete">[삭제]\</a> 와 같음.
+### 6.5.5. 글 수정(UPDATE) 2개 Method.
+
+- views.py 에 추가.
+	```python
+	def edit(request, pk):
+	    board = Board.objects.get(pk=pk)
+	    context={
+	        'board': board,
+	    }
+	    return render(request, 'boards/edit.html', context)
+	
+	def update(request, pk):
+	    board = Board.objects.get(pk=pk)
+	    board.title = request.POST.get('title')
+	    board.content = request.POST.get('content')
+	    board.save()
+	    # return redirect(f'/boards/{pk}')
+	    return redirect('boards:detail', board.pk)
+	```
+	
+	**edit 함수**
+	> 페이지를 수정할 데이터를 update에 전송할 페이지 만들어 줌.ㄴ
+	
+	**update 함수**
+	
+	> DB를 수정해줄 함수.
+
+	**redirect('boards:detail', board.pk)**
+	
+	> 'boards:detail'을 통해서 /boards/{pk}를 찾아감. 이때 board.pk를 pk에 넣게 됨.
+
+- boards/urls.py 에 urlpatterns list에 추가.
+	
+	```python
+	path('<int:pk>/edit/', views.edit, name='edit'),
+	path('<int:pk>/update/', views.update, name='update'),
+	```
+	
+- boards/templates/boards/edit.html
+	```django
+	{% extends "base.html" %}
+	{% block content %}
+	   <h1>NEW 새로운 글을 작성</h1>
+	<!--    <form action="/boards/{{board.pk}}/update/" method="POST">-->
+	    <form action="{% url 'boards:update' board.pk %}" method="POST">
+	        {% csrf_token %}
+	        <label for="title">TITLE</label><!-- for에 inputlabel을 줌. -->
+	        <input id="title" type="text" name="title" value="{{board.title}}">10글자 이하.<br>
+	        <label for="content">CONTENT</label><br>
+	        <textarea id="content" name="content" col="30" row="10">{{ board.content }}</textarea><br>
+	        <input type="submit" value="작성">
+	    </form>
+	<!--    <a href="/boards/">목록으로</a>-->
+	    <a href="{% url 'boards:index' %}">목록으로</a>-->
+	{% endblock %}
+	```
+
+### 6.5.5. 새로 글 쓰기(CREATE) 1개 Method.
+
+- views.py 수정 내용.
+
+  ```python
+  ## new 함수 삭제
+  
+  ## create 함수 수정.
+  def create(request):
+      if request.method == 'POST':
+          # request 가 POST 로 왔을 때는 create
+          title = request.POST.get('title')  # 글 제목을 받아옴.
+          content = request.POST.get('content')
+          # orm title 과 content에 위에서 넘어온 값을 저장.
+          board = Board(title=title, content=content)
+          # DB에 저장.
+          board.save()
+          return redirect('boards:detail', board.pk)
+      else:
+          #request method 가 GET 으로 왔을 때 new
+          return render(request, 'boards/create.html')
+  ```
+
+- boards/urls.py 수정 내용.
+
+  ```python
+  # path('new/', views.new, name='new'), 삭제.
+  ```
+
+- templates/boards/create.html
+
+  ```django
+  {% extends "base.html" %}
+  {% block content %}
+     <h1>NEW 새로운 글을 작성</h1>
+      <form method="POST">
+  <!--   form의 action 주소가 없으면 자동으로 글이 작성됨.     -->
+          {% csrf_token %}
+          <label for="title">TITLE</label><!-- for에 inputlabel을 줌. -->
+          <input id="title" type="text" name="title">10글자 이하.<br>
+          <label for="content">CONTENT</label>
+          <textarea id="content" name="content" col="30" row="10"></textarea><br>
+          <input type="submit" value="작성">
+      </form>
+      <a href="{% url 'boards:index' %}">목록으로</a>
+  {% endblock %}
+  ```
+
+### 6.5.6.  글 삭제(DELETE) POST 방식.
+
+- views.py 수정 내용.
+
+  ```python
+  def delete(request, pk): # detail/에서 접근 가능하도록 만들어 놓음.
+      board = Board.objects.get(pk=pk)
+      if request.method == 'POST':
+          # POST 방식으로 접근 했을 때 할 행동.
+          board.delete()
+          return redirect('boards:index')
+      else:
+          # GET방식으로 접근했을 때 할 행동.
+          return redirect('boards:detail', board.pk)
+  ```
+
+- templates/boards/detail.html
+
+  ```django
+  {% extends "base.html" %}
+  {% block content %}
+      <h1>DETAIL</h1>
+      <p>{{board.pk}}</p>
+      <hr>
+      <p>제목 : {{board.title}}</p>
+      <p>내용 : {{board.content}}</p>
+      <pre>생성 : {{board.created_at}}</pre>
+      <p>수정 : {{board.updated_at}}</p>
+      <hr>
+      <form action="{% url 'boards:delete' board.pk %}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??')">
+          {% csrf_token %}
+          <input type="submit" value="삭제"></br>
+      </form>
+      <a href="{% url 'boards:update' board.pk %}">[수정]</a></br>
+      <a href="{% url 'boards:index' %}">목록으로</a>
+  {% endblock %}
+  
+  ```
+
+  **\<form action="{% url 'boards:delete' board.pk %}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??')">**
+
+  > POST 방식으로 바꾸어 줌.(csrf_token 필요.)
+  > R U SURE?? 클릭하면 submit 전에 해당 문구가 뜸.
+
+### 6.5.7. 글 수정(UPDATE) 1개 Method.
+
+- views.py 수정 내용.
+
+  ```python
+  def update(request, pk):
+      board = Board.objects.get(pk=pk)
+      if request.method == "POST":
+          # POST 방식으로 접근 했을 때.
+          board.title = request.POST.get('title')
+          board.content = request.POST.get('content')
+          board.save()
+          return redirect('boards:detail', board.pk)
+      else:
+          # GET 방식으로 접근 했을 때.
+          context={
+              'board': board,
+          }
+          return render(request, 'boards/update.html', context)
+  ```
+
+- boards/urls.py 수정 내용.
+
+  ```python
+  # path('<int:pk>/edit/', views.edit, name='edit'), 삭제.
+  ```
+
+- templates/boards/create.html
+
+  ```django
+  {% extends "base.html" %}
+  {% block content %}
+   <h1>NEW 새로운 글을 작성</h1>
+      <form method="POST">
+          {% csrf_token %}
+          <label for="title">TITLE</label><!-- for에 inputlabel을 줌. -->
+          <input id="title" type="text" name="title" value="{{board.title}}">10글자 이하.<br>
+          <label for="content">CONTENT</label><br>
+          <textarea id="content" name="content" col="30" row="10">{{ board.content }}</textarea><br>
+          <input type="submit" value="작성">
+      </form>
+      <a href="{% url 'boards:index' %}">목록으로</a>-->
+  {% endblock %}
+  ```
+  
+
+
+
+## 6.6. Django_extention.
 
 기본 기능보다 향상된 확장 기능들을 제공함.
 
-### 6.5.1. Django_extention 설치 및 사용 설정.
+### 6.6.1. Django_extention 설치 및 사용 설정.
 
 - 설치
   `pip install django_extensions` 설치
@@ -696,15 +974,53 @@ from django.contrib.admin.models import LogEntry
   >>>
   ```
   
+- 사용법.
+  `python manage.py show_urls` : 현재 프로젝트의 모든 url을 확인.
 
 
+
+
+
+URI : URL 과 URN의 개념을 포함하는 큰 개념.
+
+URL은 파일만 식별
+
+URI, URL 은 자원의 위치를 나타내거나, 서버를 나타내면 
+
+쿼리스트링을 포함하는 경우 : URL은 맞지만. search 까지가 URL 뒤 쿼리스트링이라는 식별자가 필요하므로 URI
+
+URN : 서버 내부적으로 사용.
+
+
+
+scheme/Protocol://Host :Port/Path
+
+http://localhost:8000/boards
+
+
+
+
+
+
+
+REST API ? 
+
+
+
+---
+
+`pip install ipython` : 
+
+from IPython import embed
+
+embed() 함수에서 정지하고 각각의 값을 알 수 있게 해줌.
 
 
 
 ---
 
 
-# 참고자료 190604, 190605
+# 참고자료 190610
 
 > - SQLite 설치 : <https://www.sqlite.org/download.html>
 > - Dango DB 설정 : <https://docs.djangoproject.com/ko/2.2/ref/settings/#std:setting-DATABASES>

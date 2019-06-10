@@ -141,7 +141,6 @@ V - 중간 관리자
 	"""
 	... 중간부분 생략 ...
 	"""
-	
 	# Internationalization # 국제화 설정
 	LANGUAGE_CODE = 'ko-kr'# 언어 설정, en-us -> ko-kr
 	
@@ -157,22 +156,22 @@ V - 중간 관리자
 	
 	STATIC_URL = '/static/'
 	```
-
-	**INSTALLED_APPS**
+	
+**INSTALLED_APPS**
 	> 사용할 앱에 대한 정보를 나타내는 list
 	> 앱 등록은 반드시 app을 생성 후 해야한다.
-
-	**TIME_ZONE**
+	
+**TIME_ZONE**
 	>  template forms 에서 출력되는 시간.
 	>  만약 모델에서도 사용자가 지정한 TIME_ZONE 값을 적용시기기 위해 False로 설정.
 	**LANGUAGE_CODE**
 	> 기본 언어 설정.
-
-	**trailing comma**
+	
+**trailing comma**
 	> django 는 리스트나 딕셔너리 요소의 마지막에 , 를 붙이는 관행.
-
-	Django에 대한 더 많은 setting.py 정보 : <https://docs.djangoproject.com/ko/2.2/ref/settings/#installed-apps>
-
+	
+Django에 대한 더 많은 setting.py 정보 : <https://docs.djangoproject.com/ko/2.2/ref/settings/#installed-apps>
+	
 - intro\urls.py
 
 	```python
@@ -237,6 +236,8 @@ V - 중간 관리자
 
 ## 6.2 Django Template Language(DTL).
 
+### 6.2.1 DTL 상속 관계.
+
 Django는 Template에서 다양한 방법으로 활용이가능하다.
 활용하기 위해서는 application명을 가진 폴더 안의 templates라는 폴더에 있어야 함.
 [DTL 사용법](https://docs.djangoproject.com/en/1.7/topics/templates/)
@@ -281,11 +282,12 @@ Django는 Template에서 다양한 방법으로 활용이가능하다.
 
 	**{% block css %}{% endblock %}**
 	**{% block content %}{% endblock %}**
+	
 	> 자식이 작성해야 하는 부분.
 	> content, css는 작성자가 지정하는 변수로 바꾸어 사용해도됨. 
 	> 하나의 부모에 여러개의 block을 만들 수 있음.(title, css 등)
 
-3. Django Template Language 사용법.
+### 6.2.2 Django Template Language 기본 함수 사용법.
 
 - dtl_example.html
 
@@ -377,7 +379,7 @@ Django는 Template에서 다양한 방법으로 활용이가능하다.
 		{% now 'SHORT_DATE_FORMAT' %}<br>
 		{% now "Y" as current_year %}<br>
 		Copyright {{ current_year }}
-	
+		{# now "Y" as current_year #}<br>
 		<hr>
 		<h3>9. 기타</h3>
 		<!--url을 만들어 줌.-->
@@ -466,8 +468,52 @@ Copyright {{ current_year }}**
 	**{{'google.com'|urlize}}**
 	
 	> 링크를 만들어 줌.
+	
+	**{#% now "Y" as current_year #}**
+	
+	> 해당 부분을 주석처리하는 방법.
+	> 일반적인 html 주석(<!--  -->)으로는 해당 내용이 주석처리되지 않음.
 
+### 6.2.3. Django namespace 사용하기 (views.py 사용법 포함).
 
+- app_name/urls.py 에 추가 될 내용.
+
+  ```python
+  app_name = 'my_app'  # 해당 내용을 입력할 경우 해당 앱에서 boards를 namespace로 사용함.
+  urlpatterns=[
+      path('url지정1/<int:pk>/',views.함수지정1, name='methodname1'),
+      path('url지정2/',views.함수지정2, name='methodname2'),
+  ]
+  ```
+
+-  views.py 에 들어갈 method
+
+  ```python
+  def 함수지정1(request):
+      '''
+      서비스할 내용. 연산 등등.
+      '''
+      return redirect('boards:detail', board.pk)
+  ```
+
+  **redirect('my_app:methodname1', board.pk)**
+
+  >methodname1이 지정된 함수에 \<int:pk>에 board.pk 를 던져 줌. 해당 페이지로 바로 이동.
+  >만약 값을 던져줄 필요가 없으면 생략하면 됨.
+
+-  .html 문서
+
+  ```django
+  {% extends "base.html" %}
+  {% block content %}
+  	<a href="{% url 'my_app:methodname1' board.pk %}">[삭제]</a></br>
+  	<a href="{% url 'my_app:methodname2' %}">[돌아가기]</a></br>
+  {% endblock %}
+  ```
+
+  **{% url 'my_app:methodname1' board.pk %}**
+  > methodname1이 지정된 함수에 \<int:pk>에 board.pk 를 던져 줌. 해당 페이지로 바로 이동.
+  > 만약 값을 던져줄 필요가 없으면 생략가능.
 
 ## 6.3. Django 사용하기. [app : pages]
 
@@ -690,7 +736,7 @@ Copyright {{ current_year }}**
 	
 	> Default 방식이 GET방식. 데이터를 GET방식으로 하여 보낸 후 /pages/catch/ url로 보냄.
 	> 여기서는 name="message"로 지정 했기 때문에 받을 때 "message"로 해주어야햠.
-> 끝에 '/'는 붙여 주는게 좋음. url의 마지막 부분이면 상관 없지만, 확장성을 고려하면 붙임.
+	> 끝에 '/'는 붙여 주는게 좋음. url의 마지막 부분이면 상관 없지만, 확장성을 고려하면 붙임.
 
 	**requset.GET.get('message')**
 	
