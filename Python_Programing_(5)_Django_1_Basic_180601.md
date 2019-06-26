@@ -1,12 +1,12 @@
 [TOC]
 
-# 6. Django Framework
+# Django Framework
 Django - MTV(model, template, view)
 M - 데이터 관리
 T - 사용자가 보는 화면
 V - 중간 관리자
 
-## 6.0. Django 시작.
+## 0. Django 시작.
 
 - PyCharm 환경
   1. 새로운 프로젝트로 실행.
@@ -16,7 +16,6 @@ V - 중간 관리자
       `django-admin startproject intro .`      (만약 '.'' 이 없으면 폴더가 하나 더 생성됨. intro 폴더 생성.)
       '.'은 현재 폴더를 의미.   '-', Django에서 사용중인 이름 등은 피해야함.
       `python manage.py startapp [앱이름]`     ((앱이름) 라는 app 생성 앱이름은 복수형 권장.)
-      
       - Ex) `python manage.py startapp pages `    (pages 라는 app 생성)
   4. 서버 기동
      `python manage.py runserver` 서버를 기동함. 수정시 자동으로 디버깅하여 적용됨.
@@ -65,7 +64,7 @@ V - 중간 관리자
 
 - 서버 종료 시 : `ctrl + c`
 
-## 6.1 Django  프로젝트 파일 설명 및 설정.
+## 1 Django  프로젝트 파일 설명 및 설정.
 1. **intro\ **
 **\_\_init\_\_.py**
 		프로젝트 초기화 시켜주는 파일. 해당디렉토리를 하나의 패키지로 다루도록 지시.
@@ -157,6 +156,7 @@ V - 중간 관리자
 	STATIC_URL = '/static/'
 	```
 	
+
 **INSTALLED_APPS**
 	> 사용할 앱에 대한 정보를 나타내는 list
 	> 앱 등록은 반드시 app을 생성 후 해야한다.
@@ -234,9 +234,9 @@ Django에 대한 더 많은 setting.py 정보 : <https://docs.djangoproject.com/
 
 
 
-## 6.2 Django Template Language(DTL).
+## 2 Django Template Language(DTL).
 
-### 6.2.1 DTL 상속 관계.
+### 2.1 DTL 상속 관계.
 
 Django는 Template에서 다양한 방법으로 활용이가능하다.
 활용하기 위해서는 application명을 가진 폴더 안의 templates라는 폴더에 있어야 함.
@@ -251,7 +251,7 @@ Django는 Template에서 다양한 방법으로 활용이가능하다.
 	- 각 어플리케이션의 templates 폴더에 다시 app_name 폴더를 생성함.
 	- settings.py에 TEMPLATES - 'DIRS': [os.path.join(BASE_DIR, 'app_name', 'templates')], # 디렉토리 설정.
 
-- base.html  :  base가 될 템플릿. 부트스트랩, 폰트어썸 을 포함함. 자식은 바디, css파일만 작성하면 됨.
+- 부모 템플릿.
 	```html
 	<!DOCTYPE html>
 	<html lang="en">
@@ -287,194 +287,246 @@ Django는 Template에서 다양한 방법으로 활용이가능하다.
 	> content, css는 작성자가 지정하는 변수로 바꾸어 사용해도됨. 
 	> 하나의 부모에 여러개의 block을 만들 수 있음.(title, css 등)
 
-### 6.2.2 Django Template Language 기본 함수 사용법.
+- 자식 템플릿, 변수 사용.
 
-- dtl_example.html
+  ```html
+  {% extends "base.html" %}
+  <!-- extends는 항상 최상단에 있어야 인식 됨. 상대경로로 작성.-->
+  {% block css %}
+  	<link rel="stylesheet" href="{% static 'stylesheets/style.css' %}">
+  {% endblock css %}
+  
+  {% block content %}
+  	<h1>'menus': {{menus}},
+          'my_sentence': {{my_sentence}},
+          'messages': {{messaes}},
+          'datetimenow': {{datetimenow}},
+          'empty_list': {{empty_list}}</h1>
+  	<h3>1. 반복문</h3>
+  {% endblock %}
+  ```
 
-	```html
-	{% extends "base.html" %}
-	<!-- extends는 항상 최상단에 있어야 인식 됨. 상대경로로 작성.-->
-	{% block css %}
-		<link rel="stylesheet" href="{% static 'stylesheets/style.css' %}">
-	{% endblock css %}
-	
-	{% block content %}
-		<h1>'menus': {{menus}},
-	        'my_sentence': {{my_sentence}},
-	        'messages': {{messaes}},
-	        'datetimenow': {{datetimenow}},
-	        'empty_list': {{empty_list}}</h1>
-		<h3>1. 반복문</h3>
-		{% for menu in menus%}
-			<p>{{menu}}</p>
-		{% endfor %}
-		<hr>
-		{% for menu in menus%}
-			<p>{{ forloop.counter}} : {{menu}}</p>
-		{% endfor %}
-		<hr>
-		{% for user in empty_list%}
-			<p>{{user}}</p>
-		{% empty %}
-			<p>지금 가입한 유저가 없습니다.</p>
-		{% endfor %}
-		<hr>
-		<h3>조건문</h3>
-		{% for menu in menus %}
-			{% if forloop.first %}
-				<p>짜장면 + 고춧가루</p>
-			{% else %}
-				<p>{{menu}}</p>
-			{% endif %}
-		{% endfor %}
-		<hr>
-		<h3>3. length filter</h3>
-		{% for message in messages %}
-			{% if message|length > 5 %}
-				<p>글이 너무 길어요.</p>
-			{% else %}
-				<p>{{message}}, {{message|length}}</p>
-			{% endif %}
-		{% endfor %}\
-		<!-- 모두 가능하다 >=, <=, ==, !=, in, not, in ,is -->
-		<hr>
-		<h3>4. lorem ipsum</h3>
-		{% lorem %}
-		<hr>
-		{% lorem 3 w %}
-		<hr>
-		{% lorem 3 w random %}
-		<hr>
-		{% lorem 3 p%}
-	
-		<h3>5. 글자 수 제한</h3>
-		<!-- 단어 단위로 잘라서 나타내기.-->
-		<p>{{my_sentence|truncatewords:3}}</p>
-		<p>{{my_sentence|truncatewords:4}}</p>
-		<!-- 공백, ... 도 하나의 글자로 봄.-->
-		<p>{{my_sentence|truncatechars:3}}</p>
-		<p>{{my_sentence|truncatechars:4}}</p>
-	
-		<hr>
-		<h3>6. 글자 관련 필터</h3>
-		<p>{{'abc'|length}}</p>
-		<p>{{'ABC'|lower}}</p>
-		<p>{{my_sentence|title}}</p>
-		<p>{{'abc def'|capfirst}}</p>
-		<p>{{'Abc Def'|capfirst}}</p>
-		<p>{{'abc Def'|capfirst}}</p>
-		<p>{{menus|random}}</p>
-	
-		<hr>
-		<h3>7. 연산</h3>
-		<p>{{ 4|add:6 }}</p>
-	
-		<hr>
-		<h3>8. 날짜 표현</h3>
-		<!-- dtl의 주석처리는 %->#으로 둘 다 변경.	-->
-		{{datetimenow}}
-		{% now 'DATETIME_FORMAT' %}<br>
-		{% now 'SHORT_DATETIME_FORMAT %}<br>
-		{% now 'DATE_FORMAT' %}<br>
-		{% now 'SHORT_DATE_FORMAT' %}<br>
-		{% now "Y" as current_year %}<br>
-		Copyright {{ current_year }}
-		{# now "Y" as current_year #}<br>
-		<hr>
-		<h3>9. 기타</h3>
-		<!--url을 만들어 줌.-->
-		{{'google.com'|urlize}}
-	{% endblock %}
-	```
+  **{% extends "상속받을 html 파일" %}**
+  >  상대경로로 작성해야함.  최상단에 위치해야 됨.
 
-	**{% extends "상속받을 html 파일" %}**
-	>  상대경로로 작성해야함.  최상단에 위치해야 됨.
-	
-	**{% block css %}사용할 CSS파일{% endblock css %}**
-	>  CSS파일을 선택하여 사용할 수 있게 함. ednblock의 css는 안써도됨.(2중으로 한 경우 작성)
+  **{% block css %}사용할 CSS파일{% endblock css %}**
 
-	**{% for menu in menus%} 반복 내용 {% endfor %}**
-	> for문을 사용함. menus라는 list에서 하나씩 뽑아서 사용. endfor 앞까지의 내용을 반복함.
+  >  CSS파일을 선택하여 사용할 수 있게 함. ednblock의 css는 안써도됨.(2중으로 한 경우 작성)
 
-	**{% for user in empty_list%}**
-		**\<p>{{user}}\</p>**
-	**{% empty %}**
-		**\<p>지금 가입한 유저가 없습니다.\</p>**
-	**{% endfor %}**
-	> 조건 for문 사용. 만약 list가 empty인 경우 작성될 내용을 명시함.
+  **{% for menu in menus%} 반복 내용 {% endfor %}**
 
-	**{% for menu in menus %}**
-		**{% if forloop.first %}**
-			**\<p>짜장면 + 고춧가루\</p>**
-		**{% else %}**
-			**\<p>{{menu}}\</p>**
-		**{% endif %}**
-	**{% endfor %}**
-	> if forloop.first : 조건문의 첫번째 루프인 경우.
+  > for문을 사용함. menus라는 list에서 하나씩 뽑아서 사용. endfor 앞까지의 내용을 반복함.
 
-	**{% for message in messages %}**
-		**{% if message|length > 5 %}**
-			**\<p>글이 너무 길어요.\</p>**
-		**{% else %}**
-			**\<p>{{message}}, {{message|length}}\</p>**
-		**{% endif %}**
-	**{% endfor %}**
-	> message|length : message라는 변수의 length를 나타냄.
+  **{{_'변수명'_}}**
 
-	**{% lorem %}
-{% lorem 3 w %}
-{% lorem 3 w random %}
-{% lorem 3 p%}**
+  > context(json 형식으로 받아온 변수)의 값을 출력.
 
-	> 아무것도 없으면 1개의 문단을 나타냄.
-	> 3 w : 앞의 3개 단어를 나타냄.
-	> 3 w random : 랜덤으로 3개의 단어를 나타냄.
-	> 3 p : 3개의 문단을 나타냄.
+### 2.2. 간단한 함수 사용 예시.
 
-	**{{my_sentence|truncatewords:3}}
-{{my_sentence|truncatewords:4}}
-{{my_sentence|truncatechars:3}}
-{{my_sentence|truncatechars:4}}**
-	> my_sentence의 일부를 잘라서 씀.
-	> truncatewords:3 앞 3개의 단어를 나타냄. 뒤에 ... 붙음
-	> truncatechars:3 앞 3개의 글자를 나타냄. 띄어쓰기와 ... 도 글자로 취급함.
+- for 문 예시
 
-	**{{'abc'|length}}
-{{'ABC'|lower}}
-{{my_sentence|title}}
-{{'abc def'|capfirst}}
-{{'Abc Def'|capfirst}}
-{{'abc Def'|capfirst}}
-{{menus|random}}**
+  ```django
+  {% for menu in menus%}
+  	<p>{{menu}}</p>
+  {% endfor %}
+  <hr>
+  {% for menu in menus%}
+  	<p>{{ forloop.counter}} : {{menu}}</p>
+  {% endfor %}
+  <hr>
+  {% for user in empty_list%}
+  	<p>{{user}}</p>
+  {% empty %}
+  	<p>지금 가입한 유저가 없습니다.</p>
+  {% endfor %}
+  ```
 
-	> length : 글자 갯수.
-	> lower : 전부 소문자.
-	> title : 타이틀(한 문장).
-	> capfirst : 첫글자 대문자로.
-	> random : list에서 랜덤으로 하나 뽑음.
+  **{% for user in empty_list%}**
+  	**\<p>{{user}}\</p>**
+  **{% empty %}**
+  	**\<p>지금 가입한 유저가 없습니다.\</p>**
+  **{% endfor %}**
 
-	**{{ 4|add:6 }}**
-	> 더하기 연산. 뺄셈이랑 더 있긴 함.
+  > 조건 for문 사용. 만약 list가 empty인 경우 작성될 내용을 명시함.
 
-	**{{datetimenow}}
-{% now 'DATETIME_FORMAT' %}
-{% now 'SHORT_DATETIME_FORMAT %}
-{% now 'DATE_FORMAT' %}
-{% now 'SHORT_DATE_FORMAT' %}
-{% now "Y" as current_year %}
-Copyright {{ current_year }}**
-	> 다양한 날짜 표현 방법.
+  **{% for menu in menus%}
+  	\<p>{{ forloop.counter}} : {{menu}}\</p>
+  {% endfor %}**
 
-	**{{'google.com'|urlize}}**
-	
-	> 링크를 만들어 줌.
-	
+  > forloop.counter : 반복문의 횟수를 반환. 숫자가 나옴.
+
+- if문 예시.
+  ```django
+  <h3>조건문</h3>
+  {% for menu in menus %}
+	{% if forloop.first %}
+  		<p>짜장면 + 고춧가루</p>
+  	{% else %}
+  		<p>{{menu}}</p>
+  	{% endif %}
+{% endfor %}
+  <hr>
+  <!-- 모두 가능하다 >=, <=, ==, !=, in, not, in ,is -->
+  <h3>3. length filter</h3>
+  {% for message in messages %}
+		{% if message|length > 5 %}
+  	<p>글이 너무 길어요.</p>
+		{% else %}
+		<p>{{message}}, {{message|length}}</p>
+  {% endif %}
+{% endfor %}
+  <hr>
+  
+  ```
+  
+  **{% for menu in menus %}**
+  	**{% if forloop.first %}**
+  		**\<p>짜장면 + 고춧가루\</p>**
+  	**{% else %}**
+  		**\<p>{{menu}}\</p>**
+  	**{% endif %}**
+  **{% endfor %}**
+  
+  > if forloop.first : 조건문의 첫번째 루프인 경우.
+  
+  **{% for message in messages %}**
+  	**{% if message|length > 5 %}**
+  		**\<p>글이 너무 길어요.\</p>**
+  	**{% else %}**
+  		**\<p>{{message}}, {{message|length}}\</p>**
+  	**{% endif %}**
+  **{% endfor %}**
+  
+  > message|length : message라는 변수의 length를 나타냄.
+  
+- 문자열 출력.
+
+  ```django
+  <h3>4. lorem ipsum</h3>
+  {% lorem %}
+  <hr>
+  {% lorem 3 w %}
+  <hr>
+  {% lorem 3 w random %}
+  <hr>
+  {% lorem 3 p%}
+  ```
+
+  **{% lorem %}
+  {% lorem 3 w %}
+  {% lorem 3 w random %}
+  {% lorem 3 p%}**
+
+  > 아무것도 없으면 1개의 문단을 나타냄.
+  > 3 w : 앞의 3개 단어를 나타냄.
+  > 3 w random : 랜덤으로 3개의 단어를 나타냄.
+  > 3 p : 3개의 문단을 나타냄.
+
+- 문자열 길이 제한.
+
+  ```django
+  <h3>5. 글자 수 제한</h3>
+  <!-- 단어 단위로 잘라서 나타내기.-->
+  <p>{{my_sentence|truncatewords:3}}</p>
+  <p>{{my_sentence|truncatewords:4}}</p>
+  <!-- 공백, ... 도 하나의 글자로 봄.-->
+  <p>{{my_sentence|truncatechars:3}}</p>
+  <p>{{my_sentence|truncatechars:4}}</p>
+  ```
+
+  **{{my_sentence|truncatewords:3}}
+  {{my_sentence|truncatewords:4}}
+  {{my_sentence|truncatechars:3}}
+  {{my_sentence|truncatechars:4}}**
+
+  > my_sentence의 일부를 잘라서 씀.
+  > truncatewords:3 앞 3개의 단어를 나타냄. 뒤에 ... 붙음
+  > truncatechars:3 앞 3개의 글자를 나타냄. 띄어쓰기와 ... 도 글자로 취급함.
+
+-  글자 관련 필터.
+
+  ```django
+  <h3>6. 글자 관련 필터</h3>
+  <p>{{'abc'|length}}</p>
+  <p>{{'ABC'|lower}}</p>
+  <p>{{my_sentence|title}}</p>
+  <p>{{'abc def'|capfirst}}</p>
+  <p>{{'Abc Def'|capfirst}}</p>
+  <p>{{'abc Def'|capfirst}}</p>
+  <p>{{menus|random}}</p>
+  ```
+
+  **{{'abc'|length}}
+  {{'ABC'|lower}}
+  {{my_sentence|title}}
+  {{'abc def'|capfirst}}
+  {{'Abc Def'|capfirst}}
+  {{'abc Def'|capfirst}}
+  {{menus|random}}**
+
+  > length : 글자 갯수.
+  > lower : 전부 소문자.
+  > title : 타이틀(한 문장).
+  > capfirst : 첫글자 대문자로.
+  > random : list에서 랜덤으로 하나 뽑음.
+
+- 연산.
+
+  ```django
+  <h3>7. 연산</h3>
+  <p>{{ 4|add:6 }}</p>
+  ```
+
+  **{{ 4|add:6 }}**
+
+  > 더하기 연산. 뺄셈이랑 더 있긴 함.
+
+- 날짜 관련 필터.
+
+  ```django
+  <h3>8. 날짜 표현</h3>
+  <!-- dtl의 주석처리는 %->#으로 둘 다 변경.	-->
+  {{datetimenow}}
+  {% now 'DATETIME_FORMAT' %}<br>
+  {% now 'SHORT_DATETIME_FORMAT' %}<br>
+  {% now 'DATE_FORMAT' %}<br>
+  {% now 'SHORT_DATE_FORMAT' %}<br>
+  {% now "Y" as current_year %}<br>
+  ```
+
+  **{{datetimenow}}
+  {% now 'DATETIME_FORMAT' %}
+  {% now 'SHORT_DATETIME_FORMAT %}
+  {% now 'DATE_FORMAT' %}
+  {% now 'SHORT_DATE_FORMAT' %}
+  {% now "Y" as current_year %}
+  Copyright {{ current_year }}**
+
+  > 다양한 날짜 표현 방법.
+
+- 링크.
+
+  ```django
+  <h3>9. 링크</h3>
+  <!--url을 만들어 줌.-->
+  {{'google.com'|urlize}}
+  ```
+
+  **{{'google.com'|urlize}}**
+
+  > 링크를 만들어 줌.
+
+- 주석 처리.
+
+  ```django
+  Copyright {{ current_year }}
+  {# now "Y" as current_year #}<br>
+  ```
 	**{#% now "Y" as current_year #}**
-	
-	> 해당 부분을 주석처리하는 방법.
-	> 일반적인 html 주석(<!--  -->)으로는 해당 내용이 주석처리되지 않음.
+  > 해당 부분을 주석처리하는 방법.
+  > 일반적인 html 주석(<!--  -->)으로는 해당 내용이 주석처리되지 않음.
 
-### 6.2.3. Django namespace 사용하기 (views.py 사용법 포함).
+### 2.3. Django namespace 사용하기 (views.py 사용법 포함).
 
 - app_name/urls.py 에 추가 될 내용.
 
@@ -515,12 +567,12 @@ Copyright {{ current_year }}**
   > methodname1이 지정된 함수에 \<int:pk>에 board.pk 를 던져 줌. 해당 페이지로 바로 이동.
   > 만약 값을 던져줄 필요가 없으면 생략가능.
 
-## 6.3. Django 사용하기. [app : pages]
+## 3. Django 사용하기. [app : pages]
 
 **아래의 파일은 모두 pages 앱, intro\urls.py에 pages/ 라는 url로 등록되어 있음.**
 따라서 모든 url은 앞에 pages/가 붙음.
 
-### 6.3.1. Django 기본 사용.
+### 3.1. Django 기본 사용.
 
 
 - pages\views.py 에 추가된 내용.
@@ -553,7 +605,7 @@ Copyright {{ current_year }}**
 	
 	> request를 html파일에 랜더링하여 출력함.
 
-### 6.3.2. Django, Template에 띄울 값 리턴.
+### 3.2. Django, Template에 띄울 값 리턴.
 - pages\views.py 에 추가된 내용.
 	```python
 	def dinner(request):
@@ -581,6 +633,8 @@ Copyright {{ current_year }}**
 	> context라는 dict를 넘겨주면 template에서 key를 이용하여 값을 사용가능.
 
 ### 6.3.3. Veriable Routing 방식1 : 1개의 값을 입력.
+
+Veriable Routing은 주소 자체를 변수처럼 사용, 동적으로 주소를 만드는 방식.
 
 - pages\views.py 에 추가된 내용.
 	```python
@@ -632,7 +686,7 @@ Copyright {{ current_year }}**
 	{% endblock %}
 	```
 
-### 6.3.5. Veriable Routing 방식3 : 입력형식 지정.
+### 3.5. Veriable Routing 방식3 : 입력형식 지정.
 
 - pages\views.py 에 추가된 내용.
 
@@ -664,7 +718,7 @@ Copyright {{ current_year }}**
 	> 입력형식을 지정해줌.
 
 
-### 6.3.6. Veriable Routing 방식4 : 입력받아 연산.
+### 3.6. Veriable Routing 방식4 : 입력받아 연산.
 
 - pages\views.py 에 추가된 내용.
 
@@ -691,7 +745,7 @@ Copyright {{ current_year }}**
 	{% endblock %}
 	```
 
-### 6.3.7. GET 방식 데이터 입력.
+### 3.7. GET 방식 데이터 입력.
 
 **_<u>GET 은 DB에서 데이터를 꺼내는 것! - > DB변화 X</u>_**
 
@@ -742,7 +796,7 @@ Copyright {{ current_year }}**
 	
 	> GET방식으로 입력받은 데이터 중 'message'라는 name을 가진 것을 뽑아옴.
 
-#### 6.3.7.1 GET방식 예제 : ASCII ART 받아오기.
+#### 3.7.1 GET방식 예제 : ASCII ART 받아오기.
 
 - pages\views.py 에 추가된 내용.
 
@@ -808,7 +862,7 @@ Copyright {{ current_year }}**
 	
 	> 작성된 내용을 띄어쓰기, 텝 등을 그대로 표시하는 태그.
 
-### 6.3.8. POST 방식으로 입력 받기.
+### 3.8. POST 방식으로 입력 받기.
 
 **_<u>POST는 DB를 조작(생성/ 수정/ 삭제)! - > DB변화 O</u>_**
 
@@ -878,10 +932,12 @@ Copyright {{ current_year }}**
 	>
 	> POST 방식은 DB를 조작하기 때문에 보안에 취약하면 문제가 될 수 있기 때문에 최소한의 신원확인이 요구됨.
 	>
+	> 자기 자신이 보낸 요청인지를 검증하고 확인하기 위한 키라고 보면 됨.
+	>
 	> - csrf attack
 	> 웹어플리케이션의 취약점 중 하나로 **사용자가 자신의 의지와 무관하게 공격자가 의도한 행동을 하여 특정 웹페이즐 보안에 취약하게 한다거나 수정, 삭제 등의 작업을 하게 만드는 공격방법을 의미**
 
-### 6.3.9. static파일 사용하기.
+### 3.9. static파일 사용하기.
 
 **static 파일**
 image css js 파일 등 별도의 처리없이 파일 내용을 그대로 보여줘도 되는 파일. (image, css 등)
@@ -934,7 +990,7 @@ Django는 app에 static 폴더에 위치가 지정되어 있음.
 	
 	> static 폴더의 page/images/123.gif를 띄움.
 
-### 6.3.10. dtl_example
+### 3.10. dtl_example
 
 - pages\views.py 에 추가된 내용.
 
@@ -1062,7 +1118,80 @@ Django는 app에 static 폴더에 위치가 지정되어 있음.
   {% endblock %}
   ```
 
+
+
+## 4. Django_extention.
+
+기본 기능보다 향상된 확장 기능들을 제공함.
+
+### 4.1. Django_extention 설치 및 사용 설정.
+
+- 설치
+  `pip install django_extensions` 설치
+
+- crud/settings.py 에 사용 설정.
+
+  ```python
+  INSTALLED_APPS = [
+      # first part apps
+      'boards.apps.BoardsConfig',
+      
+      # thrid part apps
+      'django_extensions', # 위치 중요. Django_extention 사용 설정.
+      
+      # django part apps
+      'django.contrib.admin',
+      'django.contrib.auth',
+      'django.contrib.contenttypes',
+      'django.contrib.sessions',
+      'django.contrib.messages',
+      'django.contrib.staticfiles',
+  ]
+  ```
+
+- shell_plus
+
+  - 기본 django-shell 보다 편리한 확장프로그램.
+  - shell이 실행되면 현재 프로젝트에서 **사용하고 있는 모든 모듈을 자동으로 import**
+
+  ```python
+  $ python manage.py shell_plus
+  # Shell Plus Model Imports
+  from django.contrib.admin.models import LogEntry
+  from django.contrib.auth.models import Group, Permission, User
+  from django.contrib.contenttypes.models import ContentType
+  from django.contrib.sessions.models import Session
+  from boards.models import Board
+  # Shell Plus Django Imports
+  from django.core.cache import cache
+  from django.conf import settings
+  from django.contrib.auth import get_user_model
+  from django.db import transaction
+  from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch,
+  Q, Sum, When, Exists, OuterRef, Subquery
+  from django.utils import timezone
+  from django.urls import reverse
+  Python 3.6.7 (default, Dec 9 2018, 17:28:26)
+  [GCC 4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.11.45.5)] on
+  darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  (InteractiveConsole)
+  >>>
+  ```
+
+- 사용법.
+  `python manage.py show_urls` : 현재 프로젝트의 모든 url을 확인.
+  `python manage.py shell_plus` : python manage.py shell 과 다르게 따로 import 할 필요가 없음.
+
+
+
+
+
+
+
 파이참 설정 file - settings - editor - general - ensure - line -feed at file end of save 설정
+
+
 
 # 참고자료 180601
 

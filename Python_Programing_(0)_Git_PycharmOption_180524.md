@@ -102,10 +102,11 @@ Git에 대해서 알아 봅시다.
 3. commit 할 목록에 담기
 	공유할 파일을 정하는 과정.
     `git add 파일명.확장자`  : 특정 파일을 목록에 담음.
+    (만약 다른사람의 gitRepo를 포함하고 싶은 경우  git submodule add <url> <Repo명>)
     `git add .` <-작업디렉토리에 있는 변경사항 전부를 목록에 담음.
     `git add *.확장자` : 해당 확장자인 파일을 목록에 담음.
 	`git add -i` : 파일을 목록에 담을 때, 대화식으로 함.
-4. commit 하기
+3. commit 하기
    push하여 공유 혹은 최종본을 올리기 전 필수 과정.
    `git commit -m 'commit 메세지.'` 소스코드 상태를 스탭샷을 찍는 것과 동일.
    `staging area`에 담겨 있는 내용을 이력으로 기록.

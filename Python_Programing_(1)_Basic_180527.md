@@ -1,6 +1,6 @@
 [TOC]
 
-# 1. 190527 파일 읽고 수정 명령.
+# 파이썬 기본.
 
 
 
@@ -688,10 +688,31 @@ print(s1)
   </html>
   ```
 
+## 1.7. 파이썬 가상환경.
+
+코드는 사용환경에 따라 차이가 있을 수 있기 때문에 독립된 환경에서 개발을 할 필요가 있다. 모듈간의 네이밍충돌, 평소와 다른 버전 사용, 등등의 이유로 독립된 환경을 구축해야하는데 이를 위해서 사용하는 독립된 환경이다.
+
+1. 가상환경 만들기.
+`python -m venv '가상환경 이름' `
+ex) `python -m venv form-venv`
+venv는 가상환경을 만드는 모듈
+2. 가상환경 활성화.
+	- window
+    `source '가상환경이름'/Scripts/activate`
+    ex) `source form-venv/Scripts/activate`
+    - Unix or MacOS
+    `source '가상환경이름'/bin/activate`
+    ex) `source form-venv/bin/activate`
+3. 의존성 생성.
+	`pip freeze > requirements.txt`
+	현재 사용중인 가상환경에 제공되는 모듈 정보를 저장함.
+4. 외부에서 사용시 의존성 가져오기.
+	`pip install -r requirements.txt`
+	requirements.txt 에 있는 의존성 정보를 가져와 설치함.
+
 
 
 ***
-
 
 # ※ 참고자료 190527
 >  - 참고자료 - 2019년 웹개발자 로드맵 : <https://github.com/kamranahmedse/developer-roadmap>

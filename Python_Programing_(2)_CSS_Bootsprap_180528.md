@@ -55,10 +55,10 @@
 	}
 	```
 
-**※ 스타일 적용 우선 순위**
+	**※ 스타일 적용 우선 순위**
 
-> !important > inline > embedding > file link > browser default
->   단, 동일한 head에 외부스타일을 나중에 정의할 경우, 나중에 정의한 외부스타일이 먼저 적용. 마지막에 덮어씌워지기 때문.
+	> !important > inline > embedding > file link > browser default
+	>   단, 동일한 head에 외부스타일을 나중에 정의할 경우, 나중에 정의한 외부스타일이 먼저 적용. 마지막에 덮어씌워지기 때문.
 
 
 

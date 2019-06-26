@@ -72,11 +72,26 @@ Precompiled Binaries for Windows를 찾음.
 
 Django DB 설정 참고 : <https://docs.djangoproject.com/ko/2.2/ref/settings/#std:setting-DATABASES>
 
+### 4.3 Django ORM 사용.
 
+#### 4.3.1. N Relation.
 
-## 5. Django ORM 사용.(CRUD. 게시판 글 작성 모델)
+1. 모델 관계
+`ForeignKey` : 1:N 관계 (1이 key를 포함함.) ex) 하나의 게시글에 여러개의 댓글.
+`OneToOneField` : 1:1관계(대부분 하나의 테이블로 통합.)
+`ManyToManyField` : M:N관계(다 대 다 관계) ex) 사람들을 그룹지음.
+2. ForeignKey(참조키, 외래키)
+   - 개념
+   
+     - 외래 키는 참조하는 테이블에서 1개의 키(속성 또는 속성의 집합)에 해당하고, 참조하는 측의 관계 변수는 참조되는 측의 테이블의 키를 가리킨다.
+   
+      - 하나(또는 복수) 다른 테이블의 기본 키 필드를 가리키는 데이터의 참조 무결성(Referential Integrity)를 확인하기 위하여 사용된다. 즉, 허용된 데이터 값만 데이터베이스에 저장되는 것이다.
+   
+   - 특징
+      - 참조 키의 값으로는 부모 테이블에 존재하는 키의 값 만을 넣을 수 있다 => 참조 무결성 참조키를 사용하여 부모 테이블의 유일한 값을 참조한다. ( 예를 들어, 부모 테이블의 기본 키를 참조 )
+     - 참조키의 값이 부모 테이블의 기본키일 필요는 없지만 유일해야 한다.
 
-### 5.1. 기본 설정.
+#### 4.3.2. 기본 설정.
 
 - settings.py에 보면.
 
@@ -132,7 +147,7 @@ Django DB 설정 참고 : <https://docs.djangoproject.com/ko/2.2/ref/settings/#s
 	
 	> 모델에서도 사용자가 지정한 TIME_ZONE 값을 적용시기기 위해 False로 설정함.
 
-### 5.2. Django ORM으로 DDL, DCL, DML 만들기(모델 작성).
+#### 4.3.3. Django ORM으로 DDL, DCL, DML 만들기(모델 작성).
 DML : DB를 조작하는 언어. CRUD
 DCL : DB 접근, 수정 등의 권한
 DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
@@ -184,36 +199,21 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 		> - 수정일자 : auto_now=True
 		> DB가 새로 저장될 때마다 현재날짜로 갱신.(업데이트되면 갱신됨.)
 		>   
-	
 2. migration(설계도) 생성.
-    `python manage.py makemigrations`
-    명령을 통해서 해당 'Application폴더'/migrations 폴더에 migration에 해당하는 .py 파일이 생성.
-    DB는 아직 생성되지 않음.
-    만약 모델을 수정하면 다시 명령을 실행하여 migraton을 만들어야함.
-
+`python manage.py makemigrations`
+명령을 통해서 해당 'Application폴더'/migrations 폴더에 migration에 해당하는 .py 파일이 생성.
+DB는 아직 생성되지 않음.
+만약 모델을 수정하면 다시 명령을 실행하여 migraton을 만들어야함.
 3. migration(설계도) 확인.
     `python manage.py sqlmigrate boards 0002`
     위 명령어를 실행하면 ORM이 DB로 넘길 SQL명령을 보여 줌.
 
-5. 적용여부 확인
-	`python manage.py showmigrations`
-	현재의 테이블을 만들기까지 명령이 적용된 목록을 보여줌.
-	
-6. project 문제 검사
-	`python manage.py check`
-
-6. migrate : DB 생성(테이블 생성)
+4. migrate : DB 생성(테이블 생성)
     `python manage.py migrate`
     INSTALLED_APPS 에 요구되는 각각의 models의 migrate를 만들어야 하기때문에 여러개의 DB를 만들어 줌.
     특정 앱을 선택할 수 있음. 뒤에 app이름을 써주면 됨.
 
-7. DB 초기화
-
-  8. migraions 폴더의 000$ 번호가 붙은 **파일만!** 삭제.
-
-  9. db.sqlite3 파일 삭제.
-
-### 5.3. Djnago ORM을 통해서 DB 조작 1 Create.
+#### 4.3.3. Djnago ORM을 통해서 DB 조작 1 Create.
 
 - cmd 명령.
 	```python
@@ -318,13 +318,12 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	> 수정한 데이터를 하드디스크에 적용하는 작업을 함. DB의 commit명령을 내려줌.
 	
 	**board.id()**
-	
 	> 모델에서 가지는 PK. HDD에 적용된 상태여야 출력됨.
 	
 	**board.board.full_clean()**
 	
 	> 유효성 검증함. DB설계시에 만들었던 제약조건에 맞는지 확인.
-### 5.4. Django ORM을 통해서 DB 조작 2 Read, Delete, Update.
+#### 4.3.4. Django ORM을 통해서 DB 조작 2 Read, Delete, Update.
 
 - cmd 명령.
 
@@ -335,6 +334,7 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	    return f'{self.id}글 - {self.title}: {self.content}'
 	# 내용 추가 Set이 아닌 객체를 출력시 해당 함수의 형태를 따름.
 	'''
+	
 	$ python manage.py shell
 	Python 3.7.3 (v3.7.3:ef4ec6ed12, Mar 25 2019, 22:22:05) [MSC v.1916 64 bit (AMD64)] on win32
 	Type "help", "copyright", "credits" or "license" for more information.
@@ -402,8 +402,8 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	['DoesNotExist', 'MultipleObjectsReturned', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 	'_check_column_name_clashes', '_check_constraints', '_check_field_name_clashes', '_check_fields', '_check_id_field', 	'_check_index_together', '_check_indexes', '_check_local_fields', '_check_long_column_names', 	'_check_m2m_through_same_relationship', '_check_managers', '_check_model', '_check_model_name_db_lookup_clashes', '_check_ordering', '_check_property_name_related_field_accessor_clashes',
 	'_check_single_primary_key', '_check_swappable', '_check_unique_together', '_do_insert', '_do_update', '_get_FIELD_display', '_get_next_or_previous_by_FIELD', '_get_next_or_previous_in_order', '_get_pk_val', '_get_unique_checks', 	'_meta', '_perform_date_checks', '_perform_unique_checks', '_save_parents', '_save_table', '_set_pk_val', '_state', 'check', 'clean', 'clean_fields', 'content', 'created_at', 'date_error_message', 'delete', 'from_db', 'full_clean', 'get_deferred_fields', 'get_next_by_created_at', 'get_next_by_updated_at', 	'get_previous_by_created_at', 'get_previous_by_updated_at', 'id', 'objects', 'pk', 'prepare_database_save', 'refresh_from_db', 'save', 'save_base', 'serializable_value', 'title', 'unique_error_message', 'updated_at', 'validate_unique']
 	```
-	**board.objects.filter(조건.)**
-
+**board.objects.filter(조건.)**
+	
 	>**filter명령은 객체 Set을 가져오는 것을 기본으로 함.**
 	>해당 table에서 title이 hello인 모든 데이터를 Set으로 리턴.
 	>filter는 sql의 where 역할.
@@ -416,14 +416,13 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	>>(title\_\_contains='fi') : title에 'fi'를 포함하는 Set
 	>>(content\_\_endswith='!') : title 끝에 '!'인 객체 Set
 	>>(content\_\_startswith='!') : title 시작에 '!'인 객체 Set'
-	
 
-**board.objects.filter(title='hello').first()**
-	
-> **1개의 객체를 가져옴.**
+	**board.objects.filter(title='hello').first()**
+
+	> **1개의 객체를 가져옴.**
 	> 해당 table에서 title이 hello인 모든 데이터 중 첫번째 것을 객체로 리턴.
 
-**Board.objects.order_by('title')**
+	**Board.objects.order_by('title')**
 	
 	>객체Set을 title의 이름 순으로 정렬.
 	
@@ -440,13 +439,13 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	> (pk=1) : pk가 1인 객체.
 	>
 
-**※ 객체Set 다루기**
+	**※ 객체Set 다루기**
 	
 	> boards라는 객체 Set을 가지고 있을 때 사용.
 	> `boards[1]` : 1개만 잘라서 **객체로 가져옴**.
 	> `boards[1:3]` : 1~3을 잘라서 **Set으로 가져옴**.
 
-**※ 객체 다루기**
+	**※ 객체 다루기**
 	> board라는 객첼르 가지고 있을 때 사용.
 	> `board.title='byebye'` : 해당 객체를 'byebye'로 수정. 
 	> `board.save()` : 수정한 용을 적용.
@@ -458,7 +457,7 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	>사용가능한 명령 확인.
 
 
-### 5.4. SQLite3 직접 사용.
+### 4.4. SQLite3 직접 사용.
 - cmd 명령창
 
   ```sqlite
@@ -484,11 +483,9 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	
 	> 현재 존재하는 table 목록 확인
 
+## 5. Django ORM, SQLite3 활용 1. (게시판 만들기 실습)
 
-
-## 6. Django ORM, SQLite3 활용. (게시판 만들기 실습)
-
-### 6.1. index 페이지.
+### 5.1. index 페이지.
 
 - views.py 에 추가.
   ```python
@@ -517,7 +514,7 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	```
 	
 
-### 6.2. 새로 글 쓰기(CREATE) 2개 Method.
+### 5.2. 새로 글 쓰기(CREATE) 2개 Method.
 
 - views.py 에 추가.
   ```python
@@ -578,7 +575,7 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	
 	> 해당 URL로 보냄.
 
-### 6.3. 세부내용 보기(READ).
+### 5.3. 세부내용 보기(READ).
 
 - views.py 에 추가.
   ```python
@@ -614,13 +611,14 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
   {% endblock %}
   ```
 
-### 6.4. 글 삭제(DELETE) GET 방식.
+### 5.4. 글 삭제(DELETE) GET 방식.
 
 - views.py 에 추가.
 	```python
 	def delete(request, pk):
 	    board = Board.objects.get(pk=pk)
 	    board.delete()
+	    # return redirect('/boards/')
 		return redirect('boards:index')
 	```
 	
@@ -695,7 +693,7 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
   **\<a href="{% url 'boards:delete' board.pk %}">[삭제]\</a>**
   
   > \<a href="/boards/{{board.pk}}/delete">[삭제]\</a> 와 같음.
-### 6.5. 글 수정(UPDATE) 2개 Method.
+### 5.5. 글 수정(UPDATE) 2개 Method.
 
 - views.py 에 추가.
 	```python
@@ -752,7 +750,7 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 	{% endblock %}
 	```
 
-### 6.6. 새로 글 쓰기(CREATE) 1개 Method.
+### 5.5. 새로 글 쓰기(CREATE) 1개 Method (RESTful 적용).
 
 - views.py 수정 내용.
 
@@ -800,7 +798,7 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
   {% endblock %}
   ```
 
-### 6.7. 글 삭제(DELETE) POST 방식.
+### 5.6. 글 삭제(DELETE) POST 방식.
 
 - views.py 수정 내용.
 
@@ -844,7 +842,7 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
   > POST 방식으로 바꾸어 줌.(csrf_token 필요.)
   > R U SURE?? 클릭하면 submit 전에 해당 문구가 뜸.
 
-### 6.8. 글 수정(UPDATE) 1개 Method.
+### 5.7. 글 수정(UPDATE) 1개 Method (RESTful 적용).
 
 - views.py 수정 내용.
 
@@ -869,9 +867,10 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
 
   ```python
   # path('<int:pk>/edit/', views.edit, name='edit'), 삭제.
+  path('<int:board_pk>/update/', views.update, name='update'), # 이것 만 사용.
   ```
 
-- templates/boards/create.html
+- templates/boards/update.html
 
   ```django
   {% extends "base.html" %}
@@ -890,13 +889,13 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
   ```
   
 
+## 6. Django ORM, SQLite3 활용 2. (댓글 기능, 1:N 관계)
 
+댓글은 하나의 글에 여러개의 글이 추가로 작성되기 때문에 게시글과 댓글은 1:N관계를 가진다.
 
-## 7. Django ORM, SQLite3 활용. (댓글 모델 설계 및 실습.)
+### 6.1. 댓글모델 작성. 1:N 관계 모델.
 
-### 7.1. 댓글 모델 설계
-
-- boards/models.py 에 추가
+- models.py에 추가.
 
   ```python
   class Comment(models.Model):
@@ -909,57 +908,370 @@ DDL : 테이블, 스키마 등등 DB의 논리구조를 정의하는 언어.
       def __str__(self):
           # return self.content
           return f'<board({self.board_id}): Commnet({self.pk}) - {self.content}>'
+  
   ```
 
-  **models.ForeignKey(Board, on_delete=models.CASCADE)**
+  **models.ForeignKey(Board, on_delete)**
 
-  > ForeignKey SQL의 외래키 설정.
-  > 첫번째 인자로 참조할 객체.
-  > 두번째 인자로 객체를 삭제 시 결정.
-  > CASCADE의 경우 삭제하면 함께 삭제함.
+  > 참조할 모델(Board)을 설정해 줍니다. 댓글이 작성된 글을 참조하도록 함.
+  > 정의는 board로 했지만 _**board_pk**_로 테이블이 생성됨. !!!!
+  > **on_delete**는 삭제할지 말지에 대한 설정. 필수 인자.
+  >
+  > > **ForeignKey의 필수 인자**, 참조하는 부모객체가 사라졌을 때 딸린 자식객체를 어떻게 처리할 것인가에 대한 옵션, 데이터 무결성을 위해서 매우 중요한 설정.
+  > >
+  > > 선택가능한 옵션 : CASCADE, PROTECT, SET_NULL, SET_DEFAULT, SET(), DO_NOTING
+  > > **CASCADE** : 부모객체가 삭제 됐을 때 참조하는 객체도 삭제.
+  > > **PROTECT** : 참조가 되ㅓ 있는 경우 오류 발생.
+  > > **SET_NULL** : 부모객체가 삭제 됐을 때 모든 값을 NULL로 치환.(NOT NULL조건은 불가능.)
+  > > **SET_DEFAULT** : 모든 값이 DEFAULT값으로 치환
+  > >                              (DEFAULT 설정 필요. default 없으면 null로 잡기도 함. 장고는 아님.)
+  > > **SET()** : 특정 함수 호출.
+  > > **DO_NOTING** : 아무것도 하지 않음. 다만, SQL에 on delete 직접 설정.
+  
+  위 모델을 가지고 makemigration과 migrate를 해줌.
+
+#### 6.1.1. 1:N관계 활용하기.
+
+- Comment 모델 다루기.
+
+  ```python
+  $ python manage.py shell_plus # Django_extention의 기능.
+  # Shell Plus Model Imports
+  from boards.models import Board, Comment
+  from django.contrib.admin.models import LogEntry
+  from django.contrib.auth.models import Group, Permission, User
+  from django.contrib.contenttypes.models import ContentType
+  from django.contrib.sessions.models import Session
+  # Shell Plus Django Imports
+  from django.core.cache import cache
+  from django.conf import settings
+  from django.contrib.auth import get_user_model
+  from django.db import transaction
+  from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When, Exists, OuterRef, Subquery
+  from django.utils import timezone
+  from django.urls import reverse
+  Python 3.7.3 (v3.7.3:ef4ec6ed12, Mar 25 2019, 22:22:05) [MSC v.1916 64 bit (AMD64)]
+  Type 'copyright', 'credits' or 'license' for more information
+  IPython 7.5.0 -- An enhanced Interactive Python. Type '?' for help.
+  
+  In [1]: board = Board.objects.get(pk=6)
+  
+  In [2]: comment = Comment()
+  
+  In [3]: comment.content = 'my comment'
+  
+  In [4]: comment.board = board
+  
+  In [5]: comment.save()
+  
+  In [6]: comment.pk
+  Out[6]: 28
+  
+  In [7]: comment.content
+  Out[7]: 'my comment'
+  
+  In [8]: comment.board_id
+  Out[8]: 6
+  
+  In [9]: comment.board
+  Out[9]: <Board: 6글 - the first: the first content>
+  
+  In [10]: comment.board.pk
+  Out[10]: 6
+  
+  In [11]: comment.board.title
+  Out[11]: 'the first'
+  
+  In [12]: comment.board.content
+  Out[12]: 'the first content'
+  
+  In [13]: board.comment_set.all()
+  Out[13]: <QuerySet [<Comment: <board(6): Commnet(8) - 최신1>>, <Comment: <board(6): Commnet(9) - 최신2>>, <Comment: <board(6): Commnet(10) - 최신3>>, <Comment: <board(6): Commnet(11) - 최신4>>, <Comment: <board(6): Commnet(14) - ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇ>>, <Comment: <board(6): Commnet(15) - ㄴㅇㄻㄴㄹ>>, <Comment: <board(6): Commnet(16) - ㅁㄴㅇㄻ>>, <Comment: <board(6): ommnet(17) - ㅁㅈㄷㄹ>>, <Comment: <board(6): Commnet(18) - ㅊㅍ>>, <Comment: <board(6): Commnet(19) - >>, <Comment: <board(6): Commnet(20) - ㅁㄴㅇㄹ>>, <Comment: <board(6): Commnet(21) - 최신4>>, <Comment: <board(6): Commnet(22) - >>, <Comment: <board(6): Commnet(23) - >>, <Comment: <board(6): Commnet(24) - >>, <Comment: <board(6): Commnet(25) - >>, <Comment: <board(6): Commnet(28) - my comment>>]>
+  
+  In [14]: comments = board.comment_set.all()
+  
+  In [15]: comments.first().content
+  Out[15]: '최신1'
+  
+  In [16]: comments[0].content
+  Out[16]: '최신1'
+  
+  In [17]: comments[2].content
+  Out[17]: '최신3'
+  
+  In [18]: comments[0].board
+  Out[18]: <Board: 6글 - the first: the first content>
+  
+  In [19]: comments[0].board_id
+  Out[19]: 6
+  
+  In [20]: 
+  ```
+
+  **board(게시글 - 1) : comment(댓글 - 다) : comment_set**
+
+  > 하나의 게시글에 여러개의 댓글이 달리는 관계이기 때문에 항한 set의 형태로 가져온다.
+
+  **comment(댓글 - 다) : board(게시글 - 1) : board**
+
+  > 하나의 댓글은 반드시 하나의 게시글과 연결되기 때문에  comment.board의 접근이 가능.
+
+- admin.py  -  admin에서 Comment 테이블 관리할 수 있도록 설정.
+
+  ```python
+  from .models import Board, Comment
+  
+  class CommentAdmin(admin.ModelAdmin):
+      list_display = ('pk', 'content', 'board_id',)
+  
+  admin.site.register(Comment,CommentAdmin)
+  ```
+
+### 6.2. 댓글 작성기능 추가(Create).
+
+- boards/views.py
+
+  ```python
+  from .models import Board, Comment # 모델의 Comment를 추가로 import함
+  # ...
+  def comments_create(request, board_pk):
+      # 댓글을 달 게시물
+      board = Board.objects.get(pk=board_pk)
+      if request.method == 'POST':
+          content = request.POST.get('content')
+          # 댓글 생성 및 저장
+          comment = Comment(board=board, content=content)
+          comment.save()
+          return redirect('boards:detail', board.pk)
+      else:
+          return redirect('boards:detail', board.pk)
+  ```
+
+  > POST방식으로 들어오면 댓글을 추가, 다른 방식(GET)방식으로 들어오면 detail로 보냄.
+
+- boards/urls.py 의 urlpatterns에 추가.
+
+  ```python
+  path('<int:board_pk>/comments', views.comments_create, name='comments_create'),
+  ```
+
+- boards/views.py
+
+  ```django
+  {% extends "base.html" %}
+  {% block content %}
+      <h1>DETAIL</h1>
+      <p>{{board.pk}}</p>
+      <hr>
+      <p>제목 : {{board.title}}</p>
+      <p>내용 : {{board.content}}</p>
+      <pre>생성 : {{board.created_at}}</pre>
+      <p>수정 : {{board.updated_at}}</p>
+      <hr>
+  <!--    <a href="/boards/{{board.pk}}/delete/">[삭제]</a></br>-->
+      <form action="{% url 'boards:delete' board.pk %}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??')">
+          {% csrf_token %}
+          <input type="submit" value="게시글 삭제"></br>
+      </form>
+      <a href="{% url 'boards:update' board.pk %}">[게시글 수정]</a></br>
+      <hr>
+      <!-- 댓글 작성. -->
+      <form action="{% url 'boards:comments_create' board.pk %}" method="POST">
+          {% csrf_token %}
+          <label for="content">Comment</label>
+          <input type="text" name = "content" id="content">
+          <input type="submit" value="submit">
+      </form>
+  
+      <a href="{% url 'boards:index' %}">목록으로</a>
+  {% endblock %}
+  
+  ```
+
+
+### 6.3. 댓글 출력(Read).
+
+- boards/views.py 내용 수정.
+
+  ```python
+  def detail(request, board_pk):
+      # 요청으로 들어온 pk 값으로 해당 글을 찾아옴.
+      board = Board.objects.get(pk=board_pk)
+      # comments = board.comment_set.all()
+      comments = board.comment_set.order_by('-pk')
+      context = {
+          'board':board,
+          'comments': comments,
+      }
+      return render(request, 'boards/detail.html', context)
+  ```
+
+  **board.comment_set.order_by('-pk')**
+
+  > 해당 게시글에 연결된 모든 댓글을 역순으로 정렬하여 출력함.
+  
+- boards/urls.py 의 urlpatterns 에 추가.
+
+  ```python
+  path('<int:board_pk>/comments', views.comments_create, name='comments_create'),
+  ```
+
+- boards/detail.html
+
+  ```django
+  {% extends "base.html" %}
+  {% block content %}
+    <h1>DETAIL</h1>
+      <p>{{board.pk}}</p>
+    <hr>
+      <p>제목 : {{board.title}}</p>
+      <p>내용 : {{board.content}}</p>
+      <pre>생성 : {{board.created_at}}</pre>
+      <p>수정 : {{board.updated_at}}</p>
+      <hr>
+  <!--    <a href="/boards/{{board.pk}}/delete/">[삭제]</a></br>-->
+      <form action="{% url 'boards:delete' board.pk %}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??')">
+          {% csrf_token %}
+          <input type="submit" value="게시글 삭제"></br>
+      </form>
+      <a href="{% url 'boards:update' board.pk %}">[게시글 수정]</a></br>
+      <hr>
+      <!-- 댓글 갯수 출력하기. -->
+      <form action="{% url 'boards:comments_create' board.pk %}" method="POST">
+          {% csrf_token %}
+          <label for="content">Comment</label>
+          <input type="text" name = "content" id="content">
+          <input type="submit" value="submit">
+      </form>
+      <p>{{ comments | length }}</p>
+      <p>{{ comments.count }}</p>
+  
+      {% for comment in comments %}
+  		<li>
+  			{{comment.content}}
+  		</li>
+      {% empty %}
+          <p><b>댓글이 없어요. 처음으로 댓글을 달아 주세요!</b></p>
+      {% endfor %}
+      <hr>
+      <a href="{% url 'boards:index' %}">목록으로</a>
+  {% endblock %}
+  ```
+  
+
+### 6.4. 댓글 삭제(Delete).
+
+- boards/views.py 내용 수정.
+
+  ```python
+  def comments_delete(request, board_pk, comment_pk):
+      if request.method == 'POST':
+        comment = Comment.objects.get(pk=comment_pk)
+          comment.delete()
+    return redirect('boards:detail', board_pk)
+  ```
+  
+
+- boards/urls.py 의 urlpatterns 에 추가.
+
+  ```python
+  path('<int:board_pk>/comments/<int:comment_pk>', views.comments_delete, name='comments_delete')
+  ```
+
+
+- boards/detail.py 수정.
+
+  ```django
+  {% extends "base.html" %}
+  {% block content %}
+    <h1>DETAIL</h1>
+      <p>{{board.pk}}</p>
+    <hr>
+      <p>제목 : {{board.title}}</p>
+      <p>내용 : {{board.content}}</p>
+      <pre>생성 : {{board.created_at}}</pre>
+      <p>수정 : {{board.updated_at}}</p>
+      <hr>
+  <!--    <a href="/boards/{{board.pk}}/delete/">[삭제]</a></br>-->
+      <form action="{% url 'boards:delete' board.pk %}" method="POST" style="display: inline" onsubmit="return confirm('R U SURE??')">
+          {% csrf_token %}
+          <input type="submit" value="게시글 삭제"></br>
+      </form>
+      <a href="{% url 'boards:update' board.pk %}">[게시글 수정]</a></br>
+      <hr>
+      <!-- 댓글 갯수 출력하기. -->
+      <form action="{% url 'boards:comments_create' board.pk %}" method="POST">
+          {% csrf_token %}
+          <label for="content">Comment</label>
+          <input type="text" name = "content" id="content">
+          <input type="submit" value="submit">
+      </form>
+      <p>{{ comments | length }}</p> <!--  -->
+      <p>{{ comments.count }}</p> <!-- 쿼리문이 한번 더 실행 됨. -->
+  
+      {% for comment in comments %}
+          <li>
+              {{comment.content}}
+              <form action="{% url 'boards:comments_delete' board.pk comment.pk %}" method="POST" style="display: inline">
+                  {% csrf_token %}
+                  <input type="submit" value="댓글 삭제">
+              </form>
+          </li>
+      {% empty %}
+          <p><b>댓글이 없어요. 처음으로 댓글을 달아 주세요!</b></p>
+      {% endfor %}
+      <hr>
+      <a href="{% url 'boards:index' %}">목록으로</a>
+  {% endblock %}
+  
+  ```
+  
+
+
+
+- boards/views.py
+
+  ```python
+  
+  ```
+
+  **메소드**
+
+  > 설명
+
+## 7. 내장 User 모델 사용.
 
 
 
 
 
+## 8. Custom User 모델 사용.
 
 
 
 
 
-
-
-URI : URL 과 URN의 개념을 포함하는 큰 개념.
-
-URL은 파일만 식별
-
-URI, URL 은 자원의 위치를 나타내거나, 서버를 나타내면 
-
-쿼리스트링을 포함하는 경우 : URL은 맞지만. search 까지가 URL 뒤 쿼리스트링이라는 식별자가 필요하므로 URI
-
-URN : 서버 내부적으로 사용.
-
-
-
-scheme/Protocol://Host :Port/Path
-
-http://localhost:8000/boards
-
-
-
-REST API ? 
+## 9. 외부 연동 User 모델 사용.
 
 
 
 ---
 
-`pip install ipython` : 
+scheme/Protocol://Host :Port/Path
 
-from IPython import embed
+http://localhost:8000/boards
 
-embed() 함수에서 정지하고 각각의 값을 알 수 있게 해줌.
+---
 
-
+## ※ RESTful 개념.
+- RESTful     --     REST(=Representational State Transfer)
+  - REST원리를 따르는 시스템
+  - REST의 구성 : 자원(Resource - URI), 행위(Verb - HTTP Method), 표현(Representations)
+- REST API 디자인 가이드
+  1. URI는 정보의 자원을 표현해야 한다.
+  해당 URI에서 하는 행위에 대한 정보를 표현하지 않음.
+  2. 자원에 대한 행위는 HTTP Method(GET, POST, PUT, DELETE)로 표현한다.
+  단 Django에서는 PUT, DELETE같은 비공식적 요청을 default로 지원하지 않아 절충하여 사용.
 
 ---
 
@@ -969,3 +1281,5 @@ embed() 함수에서 정지하고 각각의 값을 알 수 있게 해줌.
 > - SQLite 설치 : <https://www.sqlite.org/download.html>
 > - Dango DB 설정 : <https://docs.djangoproject.com/ko/2.2/ref/settings/#std:setting-DATABASES>
 > - Django_extention Doc : <https://django-extensions.readthedocs.io/>
+> - URL과 URI의 차이점 : <https://blog.lael.be/post/61>
+> - REST API : <https://meetup.toast.com/posts/92>
